@@ -30,10 +30,23 @@ elif tamanho_mapa == 2:
         [0, 0, 0, 0, 0, 0]
     ]
 
-tileset = {
-    0: "",
-    1: ""
+posicoes_navios_jogador1 = {
+
 }
+
+def preparar_partida():
+    gerar_navios_escolha()
+
+def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores):
+    '''
+        Pegar a quantidade de navios
+        Em ordem, tornar a escolha das posições dos navios para o usuario, clara
+        Pedir para o usuário escolher a posição inicial do navio atual
+        Checar os lados para os quais o usuario poderá posicionar o resto do navio
+        Pedir o lado para qual o navio será colocado
+        Posicionar o navio na matriz do jogador
+    '''
+
 
 def desenhar_mapa():
     matriz_desenhada = ""
@@ -64,4 +77,8 @@ def desenhar_mapa():
 
     print(matriz_desenhada)
 
-desenhar_mapa()
+def main():
+
+    desenhar_mapa()
+
+main()
