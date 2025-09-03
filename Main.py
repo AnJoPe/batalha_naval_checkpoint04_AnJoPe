@@ -116,21 +116,57 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores):
             posicao_inicial_linha -= 1 #as listas começam do zero
             posicao_inicial_coluna -= 1 #as listas começam do zero
 
-
-            matriz_partida[posicao_inicial_linha][posicao_inicial_coluna] = identificadores_navios[navio]["Identificador"]
-            # verificar_posicionar_navio([posicao_inicial_linha, posicao_inicial_coluna], identificadores_navios[navio]["Tamanho"])
+            verificar_e_posicionar_navio([posicao_inicial_linha, posicao_inicial_coluna], navio, identificadores_navios[navio]["Tamanho"])
 
             desenhar_mapa()
             print(matriz_partida)
             lista_navios_para_adicionar[navio] -= 1
 
-# def verificar_posicionar_navio(posicao_inicial, quantidade_posicoes):
+def verificar_e_posicionar_navio(posicao_inicial, navio, quantidade_posicoes):
+    if navio == "Submarino":
+        posicionar_navio(posicao_inicial, navio, 0)
+        return
 
+    pode_mover_cima = True
+    pode_mover_baixo = True
+    pode_mover_esquerda = True
+    pode_mover_direita = True
 
+    if (posicao_inicial[0] - (quantidade_posicoes - 1) < 0 or
+            verificar_existencia_navio(posicao_inicial, quantidade_posicoes, 0)):
+        pode_mover_cima = False
+
+    if (posicao_inicial[0] + (quantidade_posicoes - 1) > (len(matriz_partida)) or
+            verificar_existencia_navio(posicao_inicial, quantidade_posicoes, 2)):
+        pode_mover_baixo = False
+
+    if (posicao_inicial[1] - (quantidade_posicoes - 1) < 0 or
+            verificar_existencia_navio(posicao_inicial, quantidade_posicoes, 3)):
+        pode_mover_esquerda = False
+
+    if (posicao_inicial[1] - (quantidade_posicoes - 1) > (len(matriz_partida)) or
+            verificar_existencia_navio(posicao_inicial, quantidade_posicoes, 1)):
+        pode_mover_direita = False
+
+    escolher_direcao_pergunta = "Escolha a direção na qual você quer posicionar o seu navio:\n"
+    if pode_mover_cima:
+        escolher_direcao_pergunta += "1 — Cima\n"
+    if pode_mover_direita:
+        escolher_direcao_pergunta += "2 — Direita\n"
+    if pode_mover_baixo:
+        escolher_direcao_pergunta += "3 — Baixo\n"
+    if pode_mover_esquerda:
+        escolher_direcao_pergunta += "4 — Esquerda\n"
+
+    escolha_direcao = int(input(escolher_direcao_pergunta + "Direção: "))
+    #ANDRÉ NAO PODE SER MAIOR QUE 4 NEM MENOR QUE 1 !!!!!!!!!!
+        ###CHECA TAMBEM SE ELE COLOCOU UMA OPÇÃO VÁLIDA
+            ###TIPO, NAO PODE COLOCAR 1 SE A OPÇÃO NAO ESTÁ DISPONIVEL, USA AS VARIAVEIS ALI EM CIMA DE "pode_move_..." pra
+            ###checar
+
+    posicionar_navio(posicao_inicial, navio, escolha_direcao - 1)
 
 def verificar_existencia_navio(posicao_inicial, quantidade_posicoes, direcao):
-    existe_navio = False
-
     '''
         DIREÇÕES:
             0 - CIMA
@@ -138,32 +174,62 @@ def verificar_existencia_navio(posicao_inicial, quantidade_posicoes, direcao):
             2 - BAIXO
             3 - ESQUERDA
     '''
-    match direcao:
-        case 0:
-            for pos in range(1, quantidade_posicoes):
-                if not matriz_partida[posicao_inicial[0] - pos][posicao_inicial[1]] == 0:
-                    existe_navio = True
-                    print("EXISTE NAVIO")
+    try:
+        match direcao:
+            case 0:
+                for pos in range(1, quantidade_posicoes):
+                    if not matriz_partida[posicao_inicial[0] - pos][posicao_inicial[1]] == 0:
+                        print("EXISTE NAVIO")
+                        return True
 
-        case 1:
-            for pos in range(1, quantidade_posicoes):
-                if not matriz_partida[posicao_inicial[0]][posicao_inicial[1] + pos] == 0:
-                    existe_navio = True
-                    print("EXISTE NAVIO")
+            case 1:
+                for pos in range(1, quantidade_posicoes):
+                    if not matriz_partida[posicao_inicial[0]][posicao_inicial[1] + pos] == 0:
+                        print("EXISTE NAVIO")
+                        return True
 
-        case 2:
-            for pos in range(1, quantidade_posicoes):
-                if not matriz_partida[posicao_inicial[0] + pos][posicao_inicial[1]] == 0:
-                    existe_navio = True
-                    print("EXISTE NAVIO")
+            case 2:
+                for pos in range(1, quantidade_posicoes):
+                    if not matriz_partida[posicao_inicial[0] + pos][posicao_inicial[1]] == 0:
+                        print("EXISTE NAVIO")
+                        return True
 
-        case 3:
-            for pos in range(1, quantidade_posicoes):
-                if not matriz_partida[posicao_inicial[0]][posicao_inicial[1] - pos] == 0:
-                    existe_navio = True
-                    print("EXISTE NAVIO")
+            case 3:
+                for pos in range(1, quantidade_posicoes):
+                    if not matriz_partida[posicao_inicial[0]][posicao_inicial[1] - pos] == 0:
+                        print("EXISTE NAVIO")
+                        return True
 
-    return existe_navio
+        return False
+    except IndexError:
+        return True
+
+def posicionar_navio(posicao_inicial, navio, direcao):
+    matriz_partida[posicao_inicial[0]][posicao_inicial[1]] = identificadores_navios[navio]["Identificador"]
+    '''
+        DIREÇÕES:
+            0 - CIMA
+            1 - DIREITA
+            2 - BAIXO
+            3 - ESQUERDA
+    '''
+    if identificadores_navios[navio]["Tamanho"] > 1:
+       match direcao:
+           case 0:
+               for pos in range(1, (identificadores_navios[navio]["Tamanho"])):
+                   matriz_partida[posicao_inicial[0]-pos][posicao_inicial[1]] = identificadores_navios[navio]["Identificador"]
+           case 1:
+               for pos in range(1, (identificadores_navios[navio]["Tamanho"])):
+                   matriz_partida[posicao_inicial[0]][posicao_inicial[1] + pos] = identificadores_navios[navio][
+                       "Identificador"]
+           case 2:
+               for pos in range(1, (identificadores_navios[navio]["Tamanho"])):
+                   matriz_partida[posicao_inicial[0] + pos][posicao_inicial[1]] = identificadores_navios[navio][
+                       "Identificador"]
+           case 3:
+               for pos in range(1, (identificadores_navios[navio]["Tamanho"])):
+                   matriz_partida[posicao_inicial[0]][posicao_inicial[1] - pos] = identificadores_navios[navio][
+                       "Identificador"]
 
 def desenhar_mapa():
     matriz_desenhada = ""
