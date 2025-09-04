@@ -1,0 +1,20 @@
+- Sistema de turnos
+        - Selecionar quem começa (você, o inimigo, ou sortear)
+        - Se eu começar, selecionar quadrado que quero atirar numa matriz_visual
+        - Verificar se jogador acertou algo
+            - Se acertou, mostrar algum emoji que sinalize que afundou algo
+            - Se errou, mostrar um emoji de ❌
+
+        - Quando a I.A. for atacar, ela vai visualizar uma lista de prioridades de quadrados a atirar
+            - Se houver prioridades, ela vai selecionar um aleatório dessa lista
+            - Se não houver prioridades, ela vai selecionar um quadrado aleatório da matriz
+
+        - No fim de um turno, o jogo visualizará se um dos lados não possui mais navios
+            - Se não houver, esse lado terminará em derrota
+            - Se houver, passar pro próximo turno
+
+- No fim de uma partida:
+    - Mostrar quantos navios o jogador afundou
+    - Mostrar quantos navios o adversário afundou
+    - Mostrar os navios que sobraram do vencedor
+    - Perguntar se ele quer jogar outra partida ou finalizar a jogatina

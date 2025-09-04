@@ -106,7 +106,7 @@ def preparar_partida():
         numero_cruzadores = 1
 
     gerar_navios_escolha(numero_submarinos, numero_encouracados, numero_destroiers, numero_cruzadores)
-    gerar_navios_inimigo_artificial(numero_submarinos, numero_encouracados, numero_destroiers, numero_cruzadores)
+    # gerar_navios_inimigo_artificial(numero_submarinos, numero_encouracados, numero_destroiers, numero_cruzadores)
 
 def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores):
     """
@@ -129,29 +129,78 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores):
         lista_navios_para_adicionar["Cruzador"] = cruzadores
 
     for navio in lista_navios_para_adicionar:
+        desenhar_mapa_jogador()
+
         while lista_navios_para_adicionar[navio] > 0:
-            desenhar_mapa()
-            posicao_inicial_linha = int(input(f"Insira, por favor, a linha inicial na qual você deseja inserir um {navio}: "))
-            posicao_inicial_coluna = int(input(f"Insira, por favor, a coluna inicial na qual você deseja inserir um {navio}: "))
-            ###CHECA SE SÃO LINHAS E COLUNAS VÁLIDAS!!!
-                ###UMA LINHA E COLUNA VALIDA ESTÁ DENTRO DA MATRIZ E NAO TEM NAVIO NO QUADRADO
-                ####TAMBEM NAO É MENOR QUE 1 NENHUM DOS DOIS
-                #####CHECA TAMBÉM SE O QUADRADO ESCOLHIDO TEM LUGAR PRA EXPANDIR, OU SEJA
-                    ###TEM ALGUMA DIREÇÃO A SEGUIR CASO O NAVIO TENHA MAIS DE 1 ESPAÇO
+            posicao_valida = False
+            while not posicao_valida:
+                posicao_inicial_linha = int(input(f"Insira, por favor, a linha inicial na qual você deseja inserir um {navio} (1 a {len(matriz_partida_jogador1)}): "))
+                posicao_inicial_coluna = int(input(f"Insira, por favor, a coluna inicial na qual você deseja inserir um {navio} (1 a {len(matriz_partida_jogador1[0])}): "))
 
-            posicao_inicial_linha -= 1 #as listas começam do zero
-            posicao_inicial_coluna -= 1 #as listas começam do zero
+                if posicao_inicial_linha < 1 or posicao_inicial_linha > len(matriz_partida_jogador1):
+                    print(f"Linha inválida, por favor selecione um posição entre 1 a {len(matriz_partida_jogador1)}.")
+                    continue
 
-            verificar_e_posicionar_navio([posicao_inicial_linha, posicao_inicial_coluna], navio, identificadores_navios[navio]["Tamanho"])
+                if posicao_inicial_coluna < 1 or posicao_inicial_coluna > len(matriz_partida_jogador1[0]):
+                    print(f"Coluna inválida, por favor selecione um posição entre 1 a {len(matriz_partida_jogador1[0])}.")
+                    continue
 
-            desenhar_mapa()
-            print(matriz_partida_jogador2)
+                posicao_inicial_linha -= 1  # as listas começam do zero
+                posicao_inicial_coluna -= 1  # as listas começam do zero
+
+                if not matriz_partida_jogador1[posicao_inicial_linha][posicao_inicial_coluna] == 0:
+                    print("Posição inválida, há um navio nessa posição! Tente novamente!")
+                    continue
+
+                if not navio == "Submarino":
+                    if not pode_expandir([posicao_inicial_linha, posicao_inicial_coluna], navio):
+                        print("O navio não tem espaço para ser posicionado. Tente novamente!")
+                        continue
+                    print("Pôde expandir")
+
+                if verificar_e_posicionar_navio([posicao_inicial_linha, posicao_inicial_coluna], navio):
+                    posicao_valida = True
+                    break
+                else:
+                    continue
+            #print(matriz_partida_jogador2)
             lista_navios_para_adicionar[navio] -= 1
 
-def verificar_e_posicionar_navio(posicao_inicial, navio, quantidade_posicoes):
+def pode_expandir(posicao_inicial, navio):
+    if navio == "Submarino": return True
+
+    tamanho_navio = identificadores_navios[navio]["Tamanho"]
+
+    pode_expandir_cima = True
+    pode_expandir_baixo = True
+    pode_expandir_esquerda = True
+    pode_expandir_direita = True
+
+    #CHECA OS CANTOS PRA VER SE NÃO ESTÁ EM ALGUMA PAREDE
+    #TAMBÉM CHECA SE TEM ALGUM CAMINHO SEM NAVIOS
+    if posicao_inicial[0] == 0 or verificar_existencia_navio(posicao_inicial, navio, 0): pode_expandir_cima = False
+    if posicao_inicial[0] == len(matriz_partida_jogador1) - 1 or verificar_existencia_navio(posicao_inicial, navio, 2): pode_expandir_baixo = False
+    if posicao_inicial[1] == 0 or verificar_existencia_navio(posicao_inicial, navio, 3): pode_expandir_esquerda = False
+    if posicao_inicial[1] == len(matriz_partida_jogador1[0]) - 1 or verificar_existencia_navio(posicao_inicial, navio, 1): pode_expandir_direita = False
+
+    #print(f"CIMA: {pode_expandir_cima}")
+    #print(f"BAIXO: {pode_expandir_baixo}")
+    #print(f"ESQUERDA: {pode_expandir_esquerda}")
+    #print(f"DIREITA: {pode_expandir_direita}")
+
+    if pode_expandir_cima or pode_expandir_baixo or pode_expandir_esquerda or pode_expandir_direita: return True
+    else: return False
+
+def verificar_e_posicionar_navio(posicao_inicial, navio):
     if navio == "Submarino":
         posicionar_navio(posicao_inicial, navio, 0)
-        return
+        return True
+
+    quantidade_posicoes = identificadores_navios[navio]["Tamanho"]
+
+    if not pode_expandir(posicao_inicial, navio):
+        print(f"O {navio} não pode ser colocado nessa posição, pois não há espaço em nenhuma direção. Tente novamente e escolha outro lugar!")
+        return False
 
     pode_mover_cima = True
     pode_mover_baixo = True
@@ -159,19 +208,19 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, quantidade_posicoes):
     pode_mover_direita = True
 
     if (posicao_inicial[0] - (quantidade_posicoes - 1) < 0 or
-            verificar_existencia_navio(posicao_inicial, quantidade_posicoes, 0)):
+            verificar_existencia_navio(posicao_inicial, navio, 0)):
         pode_mover_cima = False
 
     if (posicao_inicial[0] + (quantidade_posicoes - 1) > (len(matriz_partida_jogador1)) or
-            verificar_existencia_navio(posicao_inicial, quantidade_posicoes, 2)):
+            verificar_existencia_navio(posicao_inicial, navio, 2)):
         pode_mover_baixo = False
 
     if (posicao_inicial[1] - (quantidade_posicoes - 1) < 0 or
-            verificar_existencia_navio(posicao_inicial, quantidade_posicoes, 3)):
+            verificar_existencia_navio(posicao_inicial, navio, 3)):
         pode_mover_esquerda = False
 
     if (posicao_inicial[1] - (quantidade_posicoes - 1) > (len(matriz_partida_jogador1)) or
-            verificar_existencia_navio(posicao_inicial, quantidade_posicoes, 1)):
+            verificar_existencia_navio(posicao_inicial, navio, 1)):
         pode_mover_direita = False
 
     escolher_direcao_pergunta = "Escolha a direção na qual você quer posicionar o seu navio:\n"
@@ -184,15 +233,35 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, quantidade_posicoes):
     if pode_mover_esquerda:
         escolher_direcao_pergunta += "4 — Esquerda\n"
 
-    escolha_direcao = int(input(escolher_direcao_pergunta + "Direção: "))
-    #ANDRÉ NAO PODE SER MAIOR QUE 4 NEM MENOR QUE 1 !!!!!!!!!!
-        ###CHECA TAMBEM SE ELE COLOCOU UMA OPÇÃO VÁLIDA
-            ###TIPO, NAO PODE COLOCAR 1 SE A OPÇÃO NAO ESTÁ DISPONIVEL, USA AS VARIAVEIS ALI EM CIMA DE "pode_move_..." pra
-            ###checar
+    direcao_valida = False
+    while not direcao_valida:
+        escolha_direcao = int(input(escolher_direcao_pergunta + "Direção: "))
+
+        if escolha_direcao < 1 or escolha_direcao > 4:
+            print("Direção inválida. Tente novamente!")
+            continue
+
+        if escolha_direcao == 1 and not pode_mover_cima:
+            print("Não há espaço para você posicionar o navio direcionado para cima. Tente novamente!")
+            continue
+        if escolha_direcao == 2 and not pode_mover_direita:
+            print("Não há espaço para você posicionar o navio direcionado para a direita. Tente novamente!")
+            continue
+        if escolha_direcao == 3 and not pode_mover_baixo:
+            print("Não há espaço para você posicionar o navio direcionado para baixo. Tente novamente!")
+            continue
+        if escolha_direcao == 4 and not pode_mover_esquerda:
+            print("Não há espaço para você posicionar o navio direcionado para a esquerda. Tente novamente!")
+            continue
+
+        direcao_valida = True
 
     posicionar_navio(posicao_inicial, navio, escolha_direcao - 1)
+    return True
 
-def verificar_existencia_navio(posicao_inicial, quantidade_posicoes, direcao):
+def verificar_existencia_navio(posicao_inicial, navio, direcao):
+    #print(f"Parâmetros: {posicao_inicial} : {navio} : {direcao}")
+    quantidade_posicoes = identificadores_navios[navio]["Tamanho"]
     '''
         DIREÇÕES:
             0 - CIMA
@@ -205,25 +274,25 @@ def verificar_existencia_navio(posicao_inicial, quantidade_posicoes, direcao):
             case 0:
                 for pos in range(1, quantidade_posicoes):
                     if not matriz_partida_jogador1[posicao_inicial[0] - pos][posicao_inicial[1]] == 0:
-                        print("EXISTE NAVIO")
+                        #print("EXISTE NAVIO PARA CIMA")
                         return True
 
             case 1:
                 for pos in range(1, quantidade_posicoes):
                     if not matriz_partida_jogador1[posicao_inicial[0]][posicao_inicial[1] + pos] == 0:
-                        print("EXISTE NAVIO")
+                        #print("EXISTE NAVIO PARA DIREITA")
                         return True
 
             case 2:
                 for pos in range(1, quantidade_posicoes):
                     if not matriz_partida_jogador1[posicao_inicial[0] + pos][posicao_inicial[1]] == 0:
-                        print("EXISTE NAVIO")
+                        #print("EXISTE NAVIO PARA BAIXO")
                         return True
 
             case 3:
                 for pos in range(1, quantidade_posicoes):
                     if not matriz_partida_jogador1[posicao_inicial[0]][posicao_inicial[1] - pos] == 0:
-                        print("EXISTE NAVIO")
+                        #print("EXISTE NAVIO PARA ESQUERDA")
                         return True
 
         return False
@@ -299,7 +368,7 @@ def gerar_navios_inimigo_artificial(submarinos, encouracados, destroiers, cruzad
             while not navio_criado_com_sucesso:
                 navio_criado_com_sucesso = verificar_e_posicionar_navio_inimigo([posicao_inicial_linha, posicao_inicial_coluna], navio, identificadores_navios[navio]["Tamanho"])
 
-            desenhar_mapa()
+            desenhar_mapa_jogador()
             print(matriz_partida_jogador2)
             lista_navios_para_adicionar[navio] -= 1
 
@@ -410,7 +479,7 @@ def posicionar_navio_inimigo(posicao_inicial, navio, direcao):
        #print(f"Posicionado um {navio} em {posicao_inicial} na direção {direcao}")
 
 
-def desenhar_mapa():
+def desenhar_mapa_jogador():
     matriz_desenhada = ""
     numero_colunas = len(matriz_partida_jogador1[0])
     numero_linhas = len(matriz_partida_jogador1)
