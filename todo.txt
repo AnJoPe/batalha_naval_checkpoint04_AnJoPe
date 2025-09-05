@@ -1,13 +1,5 @@
-- Sistema de turnos
-        - No fim de um turno, o jogo visualizará se um dos lados não possui mais navios
-            - Se não houver, esse lado terminará em derrota
-            - Se houver, passar pro próximo turno
-
-- No fim de uma partida:
-    - Mostrar quantos navios o jogador afundou
-    - Mostrar quantos navios o adversário afundou
-    - Mostrar os navios que sobraram do vencedor
-    - Perguntar se ele quer jogar outra partida ou finalizar a jogatina
+- PERGUNTAR O TAMANHO DESEJADO DE MAPA NO COMEÇO NA FUNÇÃO preparar_partida()
 
 - Perfumarias:
+    - Timer nas mensagens para dar tempo de digerir informações
     - "Adversário posicionou os navios"
