@@ -1,39 +1,4 @@
-# Função para escolher o tamanho do mapa
-def escolher_mapa():
-    print(
-        "Escolha o tamanho do mapa desejado\n\n"
-        " 1 - Pequeno (4x4) \n 2 - Médio (5x5) \n 3 - Grande (6x6) \n"
-        "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n"
-    )
-    # Variável para verificar se vai rodar o WHILE novamente ou se vai proseguir.
-    verificar = 0
-    while verificar == 0:
-        tamanho_mapa = int(input("Escolha: "))
-        match tamanho_mapa:
-            case 1:
-                print(
-                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                    "Você escolheu o mapa Pequeno(4x4)!"
-                )
-                verificar = 1
-            case 2:
-                print(
-                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                    "Você escolheu o mapa Médio(5x5)!"
-                )
-                verificar = 1
-            case 3:
-                print(
-                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                    "Você escolheu o mapa Grande6(6x)!"
-                )
-                verificar = 1
-            case _:
-                print(
-                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                    "Valor invalido, escolha entre 1 e 3!\n"
-                )
-                verificar = 0
+import random, time
 
 
 # Função para ver as regras e mecânicas do jogo
@@ -57,31 +22,27 @@ def regras():
         "\t|-------------------------------------------------------|\n"
         "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n"
     )
-    escolher_mapa()
 
 
-print(
-    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-    "Bem Vindos à Batalha Naval ANJOPE\n"
-    "Desenvolvido por André Colombo / José Diogo / Pedro Miranda\n"
-    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-    "Antes de começar a jogar, deseja ver as Regras?"
-)
-
-ver_regras = input("S - Sim | N - Não: ")
-if ver_regras == "S":
-    regras()
-else:
+def introducao():
     print(
         "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-        "Então vamos continuar\n"
+        "Bem Vindos à Batalha Naval ANJOPE\n"
+        "Desenvolvido por André Colombo / José Diogo / Pedro Miranda\n"
+        "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
+        "Antes de começar a jogar, deseja ver as Regras?"
     )
-    escolher_mapa()
 
-print("Agora, selecione como deseja escolher a posição das peças no mapa:")
+    ver_regras = input("S - Sim | N - Não: ")
+    if ver_regras == "S":
+        time.sleep(0.5)
+        regras()
+    else:
+        print(
+            "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
+            "Então vamos continuar\n"
+        )
 
-
-import random, time
 
 # SIGNIFICADO IDENTIFICADORES
 # 0 — Água — 🌊
@@ -99,9 +60,46 @@ identificadores_navios = {
     "Encouraçado": {"Identificador": 4, "Tamanho": 4},
 }
 
-
 lista_prioridades_inteligencia_artificial = []
 lista_ignorar_inteligencia_artificial = []
+
+
+# Função para escolher o tamanho do mapa
+def escolher_mapa():
+    print(
+        "Escolha o tamanho do mapa desejado\n\n"
+        " 1 - Pequeno (4x4) \n 2 - Médio (5x5) \n 3 - Grande (6x6) \n"
+        "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n"
+    )
+    # Variável para verificar se vai rodar o WHILE novamente ou se vai proseguir.
+    verificar = 0
+    while verificar == 0:
+        tamanho_mapa = int(input("Escolha: "))
+        match tamanho_mapa:
+            case 1:
+                print(
+                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
+                    "Você escolheu o mapa Pequeno(4x4)!"
+                )
+                return 1
+            case 2:
+                print(
+                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
+                    "Você escolheu o mapa Médio(5x5)!"
+                )
+                return 2
+            case 3:
+                print(
+                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
+                    "Você escolheu o mapa Grande6(6x)!"
+                )
+                return 3
+            case _:
+                print(
+                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
+                    "Valor inválido, escolha entre 1 e 3!\n"
+                )
+                verificar = 0
 
 
 def preparar_mapas(tamanho_mapa):
@@ -119,7 +117,7 @@ def preparar_mapas(tamanho_mapa):
         "numero_cruzadores": 0,
     }
 
-    if tamanho_mapa == 0:
+    if tamanho_mapa == 1:
         estados_jogo_principal["numero_submarinos"] = 1
         estados_jogo_principal["numero_destroiers"] = 1
         estados_jogo_principal["numero_encouracados"] = 0
@@ -143,7 +141,7 @@ def preparar_mapas(tamanho_mapa):
             [0, 0, 0, 0],
             [0, 0, 0, 0],
         ]
-    elif tamanho_mapa == 1:
+    elif tamanho_mapa == 2:
         estados_jogo_principal["numero_submarinos"] = 1
         estados_jogo_principal["numero_destroiers"] = 1
         estados_jogo_principal["numero_encouracados"] = 1
@@ -170,7 +168,7 @@ def preparar_mapas(tamanho_mapa):
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
         ]
-    elif tamanho_mapa == 2:
+    elif tamanho_mapa == 3:
         estados_jogo_principal["numero_submarinos"] = 1
         estados_jogo_principal["numero_destroiers"] = 2
         estados_jogo_principal["numero_encouracados"] = 2
@@ -215,7 +213,6 @@ def preparar_partida(estado_jogo):
     )
     print("O adversário posicionou seus navios.\n")
     time.sleep(1)
-    # print(f"POSIÇÕES DOS NAVIOS JOGADOR 2: {posicoes_navios_jogador2}")
 
     print("Nossa vez de posicionar navios...")
     time.sleep(1)
@@ -226,7 +223,6 @@ def preparar_partida(estado_jogo):
         estado_jogo["numero_cruzadores"],
         estado_jogo,
     )
-    # print(f"POSIÇÕES DOS NAVIOS JOGADOR 1: {posicoes_navios_jogador1}")
 
 
 def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estado_jogo):
@@ -315,7 +311,6 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                             "O navio não tem espaço para ser posicionado. Tente novamente!"
                         )
                         continue
-                    # print("Pôde expandir")
 
                 if verificar_e_posicionar_navio(
                     [posicao_inicial_linha, posicao_inicial_coluna], navio, estado_jogo
@@ -360,11 +355,6 @@ def pode_expandir(posicao_inicial, navio, estado_jogo):
         estado_jogo["matriz_partida_jogador1"][0]
     ) - 1 or verificar_existencia_navio(posicao_inicial, navio, 1, estado_jogo):
         pode_expandir_direita = False
-
-    # print(f"CIMA: {pode_expandir_cima}")
-    # print(f"BAIXO: {pode_expandir_baixo}")
-    # print(f"ESQUERDA: {pode_expandir_esquerda}")
-    # print(f"DIREITA: {pode_expandir_direita}")
 
     if (
         pode_expandir_cima
@@ -483,7 +473,6 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, estado_jogo):
 
 
 def verificar_existencia_navio(posicao_inicial, navio, direcao, estado_jogo):
-    # print(f"Parâmetros: {posicao_inicial} : {navio} : {direcao}")
     quantidade_posicoes = identificadores_navios[navio]["Tamanho"]
     """
         DIREÇÕES:
@@ -502,7 +491,6 @@ def verificar_existencia_navio(posicao_inicial, navio, direcao, estado_jogo):
                         ][posicao_inicial[1]]
                         == 0
                     ):
-                        # print("EXISTE NAVIO PARA CIMA")
                         return True
 
             case 1:
@@ -513,7 +501,6 @@ def verificar_existencia_navio(posicao_inicial, navio, direcao, estado_jogo):
                         ]
                         == 0
                     ):
-                        # print("EXISTE NAVIO PARA DIREITA")
                         return True
 
             case 2:
@@ -524,7 +511,6 @@ def verificar_existencia_navio(posicao_inicial, navio, direcao, estado_jogo):
                         ][posicao_inicial[1]]
                         == 0
                     ):
-                        # print("EXISTE NAVIO PARA BAIXO")
                         return True
 
             case 3:
@@ -535,7 +521,6 @@ def verificar_existencia_navio(posicao_inicial, navio, direcao, estado_jogo):
                         ]
                         == 0
                     ):
-                        # print("EXISTE NAVIO PARA ESQUERDA")
                         return True
 
         return False
@@ -673,7 +658,6 @@ def gerar_navios_inimigo_artificial(
                 tentativa_atual += 1
 
             if not navio_criado_com_sucesso:
-                # print("NAO CONSEGUI ENCAIXAR O NAVIO, TENTANDO NOVAMENTE")
                 continue
 
             lista_navios_para_adicionar[navio] -= 1
@@ -767,7 +751,6 @@ def verificar_existencia_navio_inimigo(
                         ][posicao_inicial[1]]
                         == 0
                     ):
-                        # print("EXISTE NAVIO")
                         return True
 
             case 1:
@@ -778,7 +761,6 @@ def verificar_existencia_navio_inimigo(
                         ]
                         == 0
                     ):
-                        # print("EXISTE NAVIO")
                         return True
 
             case 2:
@@ -789,7 +771,6 @@ def verificar_existencia_navio_inimigo(
                         ][posicao_inicial[1]]
                         == 0
                     ):
-                        # print("EXISTE NAVIO")
                         return True
 
             case 3:
@@ -800,7 +781,6 @@ def verificar_existencia_navio_inimigo(
                         ]
                         == 0
                     ):
-                        # print("EXISTE NAVIO")
                         return True
 
         return False
@@ -879,8 +859,6 @@ def posicionar_navio_inimigo(posicao_inicial, navio, direcao, estado_jogo):
                     f"Navio_{len(estado_jogo["posicoes_navios_jogador2"]) + 1}"
                 ] = {"Tipo_Navio": navio, "Posicoes": lista_posicoes_navio}
 
-        # print(f"Posicionado um {navio} em {posicao_inicial} na direção {direcao}")
-
 
 def desenhar_minimapa(matriz):
     matriz_desenhada = ""
@@ -888,7 +866,6 @@ def desenhar_minimapa(matriz):
     numero_linhas = len(matriz)
     for linha in range(numero_linhas):
         for coluna_quadrado in range(numero_colunas):
-            # print(f"VALOR MATRIZ: {matriz[linha][coluna_quadrado]}")
             if matriz[linha][coluna_quadrado] == 0:
                 matriz_desenhada += "[🌊]"
             elif matriz[linha][coluna_quadrado] == 1:
@@ -916,38 +893,33 @@ def desenhar_mapa_jogador(matriz):
     numero_linhas = len(matriz)
     for linha in range(numero_linhas):
         for quadrado_coluna in range(numero_colunas):
-            matriz_desenhada += " |￣￣￣￣| "
+            matriz_desenhada += " |￣￣￣￣|"
         matriz_desenhada += "\n"
 
         for segunda_parede_quadrado in range(numero_colunas):
-            if segunda_parede_quadrado >= numero_colunas / 2:
-                matriz_desenhada += " "
-            # print(f"VALOR MATRIZ: {matriz[linha][segunda_parede_quadrado]}")
             if matriz[linha][segunda_parede_quadrado] == 0:
-                matriz_desenhada += " |  🌊   | "
+                matriz_desenhada += " |   🌊   |"
             elif matriz[linha][segunda_parede_quadrado] == 1:
-                matriz_desenhada += " |  🚢   | "
+                matriz_desenhada += " |   🚢   |"
             elif matriz[linha][segunda_parede_quadrado] == 2:
-                matriz_desenhada += " |  🚢   | "
+                matriz_desenhada += " |   🚢   |"
             elif matriz[linha][segunda_parede_quadrado] == 3:
-                matriz_desenhada += " |  🚢   | "
+                matriz_desenhada += " |   🚢   |"
             elif matriz[linha][segunda_parede_quadrado] == 4:
-                matriz_desenhada += " |  🚢   | "
+                matriz_desenhada += " |   🚢   |"
             elif matriz[linha][segunda_parede_quadrado] == 5:
-                matriz_desenhada += " |  💥   | "
+                matriz_desenhada += " |   💥   |"
             elif matriz[linha][segunda_parede_quadrado] == 6:
-                matriz_desenhada += " |  ❌   | "
+                matriz_desenhada += " |   ❌   |"
             else:
-                matriz_desenhada += " |       | "
+                matriz_desenhada += " |        |"
         matriz_desenhada += "\n"
 
         for terceira_parede_quadrado in range(numero_colunas):
-            if terceira_parede_quadrado >= numero_colunas / 2:
-                matriz_desenhada += " "
-            matriz_desenhada += " |       | "
+            matriz_desenhada += " |        |"
         matriz_desenhada += "\n"
     for quadrado_coluna in range(numero_colunas):
-        matriz_desenhada += "  ￣￣￣￣  "
+        matriz_desenhada += "  ￣￣￣￣ "
 
     print(matriz_desenhada)
 
@@ -1160,7 +1132,6 @@ def partida_principal(estado_jogo):
                         ):
                             time.sleep(0.65)
                             print("O INIMIGO ACERTOU EM CHEIO!")
-                            # print(f"inimigo atirou em: [{posicao_ataque_linha_jogador_humano}, {posicao_ataque_coluna_jogador_humano}]")
                             estado_jogo["matriz_partida_jogador1"][
                                 posicao_ataque_linha_jogador_humano
                             ][posicao_ataque_coluna_jogador_humano] = 5
@@ -1302,7 +1273,6 @@ def partida_principal(estado_jogo):
                         ):
                             time.sleep(0.65)
                             print("O INIMIGO ACERTOU EM CHEIO!")
-                            # print(f"inimigo atirou em: [{posicao_ataque_linha_jogador_humano}, {posicao_ataque_coluna_jogador_humano}]")
                             estado_jogo["matriz_partida_jogador1"][
                                 posicao_ataque_linha_jogador_humano
                             ][posicao_ataque_coluna_jogador_humano] = 5
@@ -1403,7 +1373,6 @@ def partida_principal(estado_jogo):
                     navio_existente = True
 
             if not navio_existente:
-                # print("nao tem navio no jogador 2")
                 return 1
 
         elif jogador_atual == 2:
@@ -1414,7 +1383,6 @@ def partida_principal(estado_jogo):
                     navio_existente = True
 
             if not navio_existente:
-                # print("nao tem navio no jogador 1")
                 return 2
 
         if jogador_atual == 1:
@@ -1429,14 +1397,13 @@ def main():
 
     while jogo_loopando:
         # TAMANHOS
-        # PEQUENO = 0 4x4
-        # MÉDIO = 1 5x5
-        # GRANDE = 2 6x6
+        # PEQUENO = 1 - 4x4
+        # MÉDIO = 2 - 5x5
+        # GRANDE = 3 - 6x6
 
-        ## FAÇAM AQUI A TAREFA DE PERGUNTAR O TAMANHO DO MAPA
-        # usem o time.sleep() e insiram quantos segundos (dentro dos parenteses) querem que o código espere antes de prosseguir
-        # façam isso pra dar um tempinho pro usuário digerir as informações do terminal
-        tamanho_mapa = 1
+        introducao()
+        time.sleep(1.5)
+        tamanho_mapa = escolher_mapa()
         estado_jogo = preparar_mapas(tamanho_mapa)
 
         preparar_partida(estado_jogo)
