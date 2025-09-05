@@ -1,5 +1,3 @@
 - PERGUNTAR O TAMANHO DESEJADO DE MAPA NO COMEÇO NA FUNÇÃO preparar_partida()
 
-- Perfumarias:
-    - Timer nas mensagens para dar tempo de digerir informações
-    - "Adversário posicionou os navios"
+- Arrumar o mapa de reset de partida

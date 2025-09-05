@@ -1,11 +1,4 @@
-import random
-from warnings import catch_warnings
-
-# TAMANHOS
-# PEQUENO = 0 4x4
-# MÉDIO = 1 5x5
-# GRANDE = 2 6x6
-
+import random, time
 
 # SIGNIFICADO IDENTIFICADORES
     #0 — Água — 🌊
@@ -15,7 +8,6 @@ from warnings import catch_warnings
     #4 — Encouraçado — 🚢
     #5 — Ataque bem-sucedido — 💥
     #6 — Ataque mal-sucedido — ❌
-
 
 identificadores_navios = {
     "Submarino": {
@@ -36,105 +28,120 @@ identificadores_navios = {
     }
 }
 
+matriz_partida_jogador1 = []
+matriz_partida_jogador2 = []
+
+matriz_alvo_jogador1 = []
+
+posicoes_navios_jogador1 = {}
+posicoes_navios_jogador2 = {}
+
+lista_prioridades_inteligencia_artificial = []
+lista_ignorar_inteligencia_artificial = []
+
+# TAMANHOS
+    # PEQUENO = 0 4x4
+    # MÉDIO = 1 5x5
+    # GRANDE = 2 6x6
+
+## FAÇAM AQUI A TAREFA DE PERGUNTAR O TAMANHO DO MAPA
+        # usem o time.sleep() e insiram quantos segundos (dentro dos parenteses) querem que o código espere antes de prosseguir
+        # façam isso pra dar um tempinho pro usuário digerir as informações do terminal
+tamanho_mapa = 1
+
+if tamanho_mapa == 0:
+    numero_submarinos = 1
+    numero_destroiers = 1
+    numero_encouracados = 0
+    numero_cruzadores = 0
+
+    matriz_partida_jogador1 = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ]
+    matriz_partida_jogador2 = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ]
+    matriz_alvo_jogador1 = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ]
+elif tamanho_mapa == 1:
+    numero_submarinos = 1
+    numero_destroiers = 1
+    numero_encouracados = 1
+    numero_cruzadores = 1
+
+    matriz_partida_jogador1 = [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+    ]
+    matriz_partida_jogador2 = [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+    ]
+    matriz_alvo_jogador1 = [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+    ]
+elif tamanho_mapa == 2:
+    numero_submarinos = 1
+    numero_destroiers = 2
+    numero_encouracados = 2
+    numero_cruzadores = 1
+
+    matriz_partida_jogador1 = [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ]
+    matriz_partida_jogador2 = [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ]
+    matriz_alvo_jogador1 = [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ]
+
+#def preparar_mapas()
+
 def preparar_partida():
-    tamanho_mapa = 1
-
-    matriz_partida_jogador1 = []
-    matriz_partida_jogador2 = []
-
-    matriz_alvo_jogador1 = []
-
-    posicoes_navios_jogador1 = {}
-    posicoes_navios_jogador2 = {}
-
-    lista_prioridades_inteligencia_artificial = []
-    lista_ignorar_inteligencia_artificial = []
-
-    if tamanho_mapa == 0:
-        numero_submarinos = 1
-        numero_destroiers = 1
-        numero_encouracados = 0
-        numero_cruzadores = 0
-
-        matriz_partida_jogador1 = [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
-        ]
-        matriz_partida_jogador2 = [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
-        ]
-        matriz_alvo_jogador1 = [
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
-            [0, 0, 0, 0]
-        ]
-    elif tamanho_mapa == 1:
-        numero_submarinos = 1
-        numero_destroiers = 1
-        numero_encouracados = 1
-        numero_cruzadores = 1
-
-        matriz_partida_jogador1 = [
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0]
-        ]
-        matriz_partida_jogador2 = [
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0]
-        ]
-        matriz_alvo_jogador1 = [
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0]
-        ]
-    elif tamanho_mapa == 2:
-        numero_submarinos = 1
-        numero_destroiers = 2
-        numero_encouracados = 2
-        numero_cruzadores = 1
-
-        matriz_partida_jogador1 = [
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0]
-        ]
-        matriz_partida_jogador2 = [
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0]
-        ]
-        matriz_alvo_jogador1 = [
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0]
-        ]
-
+    time.sleep(1)
     gerar_navios_inimigo_artificial(numero_submarinos, numero_encouracados, numero_destroiers, numero_cruzadores)
+    print("O adversário posicionou seus navios.\n")
+    time.sleep(1)
     #print(f"POSIÇÕES DOS NAVIOS JOGADOR 2: {posicoes_navios_jogador2}")
 
+    print("Nossa vez de posicionar navios...")
+    time.sleep(1)
     gerar_navios_escolha(numero_submarinos, numero_encouracados, numero_destroiers, numero_cruzadores)
     #print(f"POSIÇÕES DOS NAVIOS JOGADOR 1: {posicoes_navios_jogador1}")
 
@@ -158,22 +165,27 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores):
     if cruzadores > 0:
         lista_navios_para_adicionar["Cruzador"] = cruzadores
 
+    print("O mapa da batalha será assim:")
+    time.sleep(0.5)
     desenhar_mapa_jogador(matriz_partida_jogador1)
     for navio in lista_navios_para_adicionar:
         while lista_navios_para_adicionar[navio] > 0:
             posicao_valida = False
             while not posicao_valida:
                 try:
+                    time.sleep(0.5)
                     posicao_inicial_linha = int(input(f"Insira, por favor, a linha inicial na qual você deseja inserir um {navio} (1 a {len(matriz_partida_jogador1)}): "))
                     posicao_inicial_coluna = int(input(f"Insira, por favor, a coluna inicial na qual você deseja inserir um {navio} (1 a {len(matriz_partida_jogador1[0])}): "))
                 except:
                     print("Valor inválido, por favor insira um número")
 
                 if posicao_inicial_linha < 1 or posicao_inicial_linha > len(matriz_partida_jogador1):
+                    time.sleep(1)
                     print(f"Linha inválida, por favor selecione um posição entre 1 a {len(matriz_partida_jogador1)}.")
                     continue
 
                 if posicao_inicial_coluna < 1 or posicao_inicial_coluna > len(matriz_partida_jogador1[0]):
+                    time.sleep(1)
                     print(f"Coluna inválida, por favor selecione um posição entre 1 a {len(matriz_partida_jogador1[0])}.")
                     continue
 
@@ -181,11 +193,13 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores):
                 posicao_inicial_coluna -= 1  # as listas começam do zero
 
                 if not matriz_partida_jogador1[posicao_inicial_linha][posicao_inicial_coluna] == 0:
+                    time.sleep(1)
                     print("Posição inválida, há um navio nessa posição! Tente novamente!")
                     continue
 
                 if not navio == "Submarino":
                     if not pode_expandir([posicao_inicial_linha, posicao_inicial_coluna], navio):
+                        time.sleep(1)
                         print("O navio não tem espaço para ser posicionado. Tente novamente!")
                         continue
                     #print("Pôde expandir")
@@ -196,6 +210,9 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores):
                 else:
                     continue
             lista_navios_para_adicionar[navio] -= 1
+            time.sleep(0.75)
+            print("Navio posicionado com sucesso.")
+            time.sleep(0.5)
             desenhar_mapa_jogador(matriz_partida_jogador1)
 
 def pode_expandir(posicao_inicial, navio):
@@ -233,13 +250,15 @@ def verificar_e_posicionar_navio(posicao_inicial, navio):
         return True
 
     elif navio == "Submarino":
+        time.sleep(1)
         print("Há um navio nessa posição, impossível posicionar um submarino aqui.")
         return False
 
     quantidade_posicoes = identificadores_navios[navio]["Tamanho"]
 
     if not pode_expandir(posicao_inicial, navio):
-        print(f"O {navio} não pode ser colocado nessa posição, pois não há espaço em nenhuma direção. Tente novamente e escolha outro lugar!")
+        time.sleep(2)
+        print(f"O {navio} não pode ser colocado nessa posição, pois não há espaço suficiente em nenhuma direção. Tente novamente e escolha outro lugar!")
         return False
 
     pode_mover_cima = True
@@ -262,7 +281,6 @@ def verificar_e_posicionar_navio(posicao_inicial, navio):
     if (posicao_inicial[1] - (quantidade_posicoes - 1) > (len(matriz_partida_jogador1)) or
             verificar_existencia_navio(posicao_inicial, navio, 1)):
         pode_mover_direita = False
-
     escolher_direcao_pergunta = "Escolha a direção na qual você quer posicionar o seu navio:\n"
     if pode_mover_cima:
         escolher_direcao_pergunta += "1 — Cima\n"
@@ -275,22 +293,28 @@ def verificar_e_posicionar_navio(posicao_inicial, navio):
 
     direcao_valida = False
     while not direcao_valida:
+        time.sleep(0.75)
         escolha_direcao = int(input(escolher_direcao_pergunta + "Direção: "))
 
         if escolha_direcao < 1 or escolha_direcao > 4:
+            time.sleep(1)
             print("Direção inválida. Tente novamente!")
             continue
 
         if escolha_direcao == 1 and not pode_mover_cima:
+            time.sleep(1)
             print("Não há espaço para você posicionar o navio direcionado para cima. Tente novamente!")
             continue
         if escolha_direcao == 2 and not pode_mover_direita:
+            time.sleep(1)
             print("Não há espaço para você posicionar o navio direcionado para a direita. Tente novamente!")
             continue
         if escolha_direcao == 3 and not pode_mover_baixo:
+            time.sleep(1)
             print("Não há espaço para você posicionar o navio direcionado para baixo. Tente novamente!")
             continue
         if escolha_direcao == 4 and not pode_mover_esquerda:
+            time.sleep(1)
             print("Não há espaço para você posicionar o navio direcionado para a esquerda. Tente novamente!")
             continue
 
@@ -466,34 +490,30 @@ def verificar_e_posicionar_navio_inimigo(posicao_inicial, navio, quantidade_posi
 
     possibilidades_direcao_navio = [0, 1, 2, 3]
 
-    try:
-        if (posicao_inicial[0] - (quantidade_posicoes - 1) < 0 or
-                verificar_existencia_navio_inimigo(posicao_inicial, quantidade_posicoes, 0)):
-            pode_mover_cima = False
-            possibilidades_direcao_navio.remove(0)
+    if (posicao_inicial[0] - (quantidade_posicoes - 1) < 0 or
+            verificar_existencia_navio_inimigo(posicao_inicial, quantidade_posicoes, 0)):
+        pode_mover_cima = False
+        possibilidades_direcao_navio.remove(0)
 
-        if (posicao_inicial[0] + (quantidade_posicoes - 1) > (len(matriz_partida_jogador2)) or
-                verificar_existencia_navio_inimigo(posicao_inicial, quantidade_posicoes, 2)):
-            pode_mover_baixo = False
-            possibilidades_direcao_navio.remove(2)
+    if (posicao_inicial[0] + (quantidade_posicoes - 1) >= len(matriz_partida_jogador2) or
+            verificar_existencia_navio_inimigo(posicao_inicial, quantidade_posicoes, 2)):
+        pode_mover_baixo = False
+        possibilidades_direcao_navio.remove(2)
 
-        if (posicao_inicial[1] - (quantidade_posicoes - 1) < 0 or
-                verificar_existencia_navio_inimigo(posicao_inicial, quantidade_posicoes, 3)):
-            pode_mover_esquerda = False
-            possibilidades_direcao_navio.remove(3)
+    if (posicao_inicial[1] - (quantidade_posicoes - 1) < 0 or
+            verificar_existencia_navio_inimigo(posicao_inicial, quantidade_posicoes, 3)):
+        pode_mover_esquerda = False
+        possibilidades_direcao_navio.remove(3)
 
-        if (posicao_inicial[1] - (quantidade_posicoes - 1) > (len(matriz_partida_jogador2)) or
-                verificar_existencia_navio_inimigo(posicao_inicial, quantidade_posicoes, 1)):
-            pode_mover_direita = False
-            possibilidades_direcao_navio.remove(1)
-    except:
-        print("ERRINHO NA REMOÇÃO DOS VALORES DA DIREÇÃO NAVIO INIMIGO")
+    if (posicao_inicial[1] + (quantidade_posicoes - 1) >= len(matriz_partida_jogador2) or
+            verificar_existencia_navio_inimigo(posicao_inicial, quantidade_posicoes, 1)):
+        pode_mover_direita = False
+        possibilidades_direcao_navio.remove(1)
 
     if len(possibilidades_direcao_navio) == 0:
         return False
-    else:
-        escolha_direcao_pergunta = random.choice(possibilidades_direcao_navio)
 
+    escolha_direcao_pergunta = random.choice(possibilidades_direcao_navio)
     posicionar_navio_inimigo(posicao_inicial, navio, escolha_direcao_pergunta)
     return True
 
@@ -597,6 +617,7 @@ def posicionar_navio_inimigo(posicao_inicial, navio, direcao):
 
        #print(f"Posicionado um {navio} em {posicao_inicial} na direção {direcao}")
 
+
 def desenhar_minimapa(matriz):
     matriz_desenhada = ""
     numero_colunas = len(matriz[0])
@@ -666,18 +687,30 @@ def desenhar_mapa_jogador(matriz):
     print(matriz_desenhada)
 
 def partida_principal():
-    jogador_inicial = int(input("Quem irá começar?\n 1 — Jogador;\n 2 — Adversário;\n 3 — Aleatório.\nDecisão: "))
-    while jogador_inicial < 1 or jogador_inicial > 3:
-        print("Opção inválida.")
-        jogador_inicial = int(input("Escolha novamente.\n 1 — Jogador;\n 2 — Adversário;\n 3 — Aleatório.\nDecisão: "))
+    while True:
+        try:
+            time.sleep(1)
+            jogador_inicial = int(
+                input("Quem irá começar?\n 1 — Jogador;\n 2 — Adversário;\n 3 — Aleatório.\nDecisão: "))
+            if 1 <= jogador_inicial <= 3:
+                break  # valor válido, sai do loop
+            else:
+                time.sleep(1)
+                print("Opção inválida. Escolha entre 1 e 3.")
+        except ValueError:
+            time.sleep(1)
+            print("Entrada inválida. Digite apenas números inteiros.")
 
     if jogador_inicial == 3:
         jogador_atual = random.randrange(1, 3)
+        time.sleep(1)
         print(f"Seleção aleatória: {jogador_atual}")
     else:
         jogador_atual = jogador_inicial
 
-    print("Quem iniciará a partida:")
+    time.sleep(1)
+    print("\n\nQuem iniciará a partida:")
+    time.sleep(0.75)
     if jogador_atual == 1:
         print("Jogador")
     else:
@@ -685,14 +718,21 @@ def partida_principal():
 
     partida_em_progresso = True
 
+    time.sleep(0.85)
+    print("\nBatalha iniciada. Boa Sorte!\n\n")
+    time.sleep(1.1)
+
     while partida_em_progresso:
         match jogador_atual:
             case 1:
+                time.sleep(1)
                 print("Esse é o mapa de inteligência, ele indicará os seus erros e acertos durante o seu ataque.")
+                time.sleep(0.5)
                 desenhar_mapa_jogador(matriz_alvo_jogador1)
 
                 posicao_valida = False
                 while not posicao_valida:
+                    time.sleep(0.75)
                     posicao_ataque_linha = input(f"Insira, por favor, a linha na qual você deseja fazer seu ataque (1 a {len(matriz_alvo_jogador1)}): ")
                     if not posicao_ataque_linha.isdigit():
                         print("Insira apenas números, por favor.")
@@ -709,11 +749,13 @@ def partida_principal():
 
                     if posicao_ataque_linha < 1 or posicao_ataque_linha > len(
                             matriz_partida_jogador1):
+                        time.sleep(1)
                         print(f"Linha inválida, por favor selecione um posição entre 1 e {len(matriz_alvo_jogador1)}.")
                         continue
 
                     if posicao_ataque_coluna < 1 or posicao_ataque_coluna > len(
                             matriz_alvo_jogador1[0]):
+                        time.sleep(1)
                         print(f"Coluna inválida, por favor selecione um posição entre 1 e {len(matriz_alvo_jogador1[0])}.")
                         continue
 
@@ -722,9 +764,10 @@ def partida_principal():
 
                     posicao_valida = True
 
-
+                time.sleep(0.75)
                 if (matriz_alvo_jogador1[posicao_ataque_linha][posicao_ataque_coluna] == 5 or
                       matriz_alvo_jogador1[posicao_ataque_linha][posicao_ataque_coluna] == 6):
+
                     print("NOSSA INTELIGÊNCIA INDICA QUE JÁ ATACAMOS ESSAS COORDENADAS!")
 
                 elif (not matriz_partida_jogador2[posicao_ataque_linha][
@@ -733,6 +776,7 @@ def partida_principal():
                                 posicao_ataque_coluna] == 5 and
                         not matriz_partida_jogador2[posicao_ataque_linha][
                                 posicao_ataque_coluna] == 6):
+
                     print("NOSSA INTELIGÊNCIA DIZ QUE NOSSO ATAQUE FOI UM SUCESSO!")
                     matriz_alvo_jogador1[posicao_ataque_linha][posicao_ataque_coluna] = 5
                     for nav in posicoes_navios_jogador2:
@@ -745,6 +789,8 @@ def partida_principal():
                     matriz_alvo_jogador1[posicao_ataque_linha][posicao_ataque_coluna] = 6
 
             case 2:
+                print("\nO inimigo irá atacar.\n")
+                time.sleep(0.75)
                 if len(lista_prioridades_inteligencia_artificial) == 0:
                     posicao_valida = False
 
@@ -781,6 +827,7 @@ def partida_principal():
                                         posicao_ataque_coluna_jogador_humano] == 5 and
                                 not matriz_partida_jogador1[posicao_ataque_linha_jogador_humano][
                                         posicao_ataque_coluna_jogador_humano] == 6):
+                            time.sleep(0.65)
                             print("O INIMIGO ACERTOU EM CHEIO!")
                             # print(f"inimigo atirou em: [{posicao_ataque_linha_jogador_humano}, {posicao_ataque_coluna_jogador_humano}]")
                             matriz_partida_jogador1[posicao_ataque_linha_jogador_humano][
@@ -823,6 +870,7 @@ def partida_principal():
                                          posicao_ataque_coluna_jogador_humano + 1])
 
                         else:
+                            time.sleep(0.65)
                             print("O ATAQUE DO INIMIGO FOI EM VÃO! APROVEITEMOS ESSA OPORTUNIDADE!")
                             lista_ignorar_inteligencia_artificial.append([posicao_ataque_linha_jogador_humano, posicao_ataque_coluna_jogador_humano])
 
@@ -864,6 +912,7 @@ def partida_principal():
                                         posicao_ataque_coluna_jogador_humano] == 5 and
                                 not matriz_partida_jogador1[posicao_ataque_linha_jogador_humano][
                                         posicao_ataque_coluna_jogador_humano] == 6):
+                            time.sleep(0.65)
                             print("O INIMIGO ACERTOU EM CHEIO!")
                             # print(f"inimigo atirou em: [{posicao_ataque_linha_jogador_humano}, {posicao_ataque_coluna_jogador_humano}]")
                             matriz_partida_jogador1[posicao_ataque_linha_jogador_humano][
@@ -906,6 +955,7 @@ def partida_principal():
                                          posicao_ataque_coluna_jogador_humano + 1])
 
                         else:
+                            time.sleep(0.65)
                             print("O ATAQUE DO INIMIGO FOI EM VÃO! APROVEITEMOS ESSA OPORTUNIDADE!")
 
                         if [posicao_ataque_linha_jogador_humano, posicao_ataque_coluna_jogador_humano] in lista_prioridades_inteligencia_artificial:
@@ -913,9 +963,6 @@ def partida_principal():
                                 [posicao_ataque_linha_jogador_humano,
                                  posicao_ataque_coluna_jogador_humano])
                         ataque_valido = True
-
-        print("Aqui está um mini-mapa indicando os danos que sofremos:")
-        desenhar_minimapa(matriz_partida_jogador1)
 
         if jogador_atual == 1:
             navio_existente = False
@@ -939,9 +986,16 @@ def partida_principal():
                 #print("nao tem navio no jogador 1")
                 return 2
 
+        time.sleep(1)
+        print("\nAqui está um mini-mapa indicando os danos que sofremos:")
+        time.sleep(0.5)
+        desenhar_minimapa(matriz_partida_jogador1)
+        time.sleep(1)
 
         if jogador_atual == 1: jogador_atual = 2
         elif jogador_atual == 2: jogador_atual = 1
+    return None
+
 
 def main():
     jogo_loopando = True
@@ -951,7 +1005,12 @@ def main():
 
         vencedor = partida_principal()
 
-        print("Aqui está um mini-mapa dos ataques feitos por nós, no inimigo.")
+        time.sleep(1)
+        print("\nFIM DA PARTIDA!!!\n")
+
+        time.sleep(1.5)
+        print("Aqui está um mini-mapa dos ataques feitos por nós, no inimigo.\n")
+        time.sleep(0.5)
         desenhar_minimapa(matriz_alvo_jogador1)
 
         submarinos_inimigos_afundados = 0
@@ -998,14 +1057,27 @@ def main():
                     posicoes_navios_jogador1[navio]["Posicoes"]) == 0:
                 encouracados_aliados_afundados += 1
 
+        time.sleep(1)
+        print("\nO vencedor é...")
+        time.sleep(1)
+        print(".")
+        time.sleep(1)
+        print("..")
+        time.sleep(1)
+        print("...")
+        time.sleep(1)
+
         if vencedor == 1:
-            print("JOGADOR 1 VENCEU!")
+            print("JOGADOR 1 VENCEU!\n")
+            time.sleep(1)
 
             print(f"Navios Inimigos, afundados por nós:"
                   f"\nSubmarinos: {submarinos_inimigos_afundados};"
                   f"\nDestroiers: {destroiers_inimigos_afundados};"
                   f"\nCruzadores: {cruzadores_inimigos_afundados};"
                   f"\nEncouraçados: {encouracados_inimigos_afundados}.\n")
+
+            time.sleep(1)
 
             print(f"Nossos navios, afundados pelo Inimigo:"
                   f"\nSubmarinos: {submarinos_aliados_afundados};"
@@ -1014,7 +1086,8 @@ def main():
                   f"\nEncouraçados: {encouracados_aliados_afundados}.")
 
         elif vencedor == 2:
-            print("ADVERSÁRIO VENCEU!")
+            print("ADVERSÁRIO VENCEU!\n")
+            time.sleep(1)
 
             print(f"Nossos navios, afundados pelo Inimigo:"
                   f"\nSubmarinos: {submarinos_aliados_afundados};"
@@ -1022,32 +1095,46 @@ def main():
                   f"\nCruzadores: {cruzadores_aliados_afundados};"
                   f"\nEncouraçados: {encouracados_aliados_afundados}.")
 
+            time.sleep(1)
+
             print(f"Navios Inimigos, afundados por nós:"
                   f"\nSubmarinos: {submarinos_inimigos_afundados};"
                   f"\nDestroiers: {destroiers_inimigos_afundados};"
                   f"\nCruzadores: {cruzadores_inimigos_afundados};"
                   f"\nEncouraçados: {encouracados_inimigos_afundados}.\n")
 
+        time.sleep(2)
         print("Depois da batalha, nossa inteligência conseguiu descobrir a antiga localização de todos os navios do inimigo.")
+        time.sleep(0.5)
         desenhar_minimapa(matriz_partida_jogador2)
 
-
-        decisao = input("Deseja jogar uma nova partida? (Sim ou Não): ")
+        time.sleep(1)
+        decisao = input("\nDeseja jogar uma nova partida? (Sim ou Não): ")
         decisao = decisao.lower().replace(" ", "")
 
         decisao_nao_feita = True
         while decisao_nao_feita:
             if decisao == "sim" or decisao == "s" or decisao == "si" or decisao == "yes" or decisao == "ye" or decisao == "y":
+                time.sleep(1)
                 print("Recomeçando partida.")
+                time.sleep(0.5)
                 print("Recomeçando partida..")
+                time.sleep(0.5)
                 print("Recomeçando partida...")
+                time.sleep(0.5)
                 print("Recomeçando partida....")
+                time.sleep(1)
+                print("\n\n\n")
 
                 decisao_nao_feita = False
                 break
 
             elif decisao == "não" or decisao == "nao" or decisao == "na" or decisao == "n" or decisao == "no":
+                time.sleep(1)
                 print("Obrigado por jogar!")
+                time.sleep(1)
+                print("Finalizando o programa.")
+                time.sleep(2)
 
                 decisao_nao_feita = False
                 jogo_loopando = False
