@@ -1,3 +1,1 @@
 - PERGUNTAR O TAMANHO DESEJADO DE MAPA NO COMEÇO NA FUNÇÃO preparar_partida()
-
-- Arrumar o mapa de reset de partida
