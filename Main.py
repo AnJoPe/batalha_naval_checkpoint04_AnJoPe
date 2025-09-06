@@ -34,7 +34,7 @@ def introducao():
     )
 
     ver_regras = input("S - Sim | N - Não: ")
-    if ver_regras == "S":
+    if ver_regras == "sim" or ver_regras == "s" or ver_regras == "si" or ver_regras == "yes" or ver_regras == "ye" or ver_regras == "y":
         time.sleep(0.5)
         regras()
     else:
@@ -211,7 +211,8 @@ def preparar_partida(estado_jogo):
         estado_jogo["numero_cruzadores"],
         estado_jogo,
     )
-    print("O adversário posicionou seus navios.\n")
+    print("O adversário posicionou seus navios.\n"
+          "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n")
     time.sleep(1)
 
     print("Nossa vez de posicionar navios...")
@@ -256,12 +257,12 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                     time.sleep(0.5)
                     posicao_inicial_linha = int(
                         input(
-                            f"Insira, por favor, a linha inicial na qual você deseja inserir um {navio} (1 a {len(estado_jogo["matriz_partida_jogador1"])}): "
+                            f"Insira, por favor, a linha inicial na qual você deseja inserir um {navio} (1 a {len(estado_jogo['matriz_partida_jogador1'])}): "
                         )
                     )
                     posicao_inicial_coluna = int(
                         input(
-                            f"Insira, por favor, a coluna inicial na qual você deseja inserir um {navio} (1 a {len(estado_jogo["matriz_partida_jogador1"][0])}): "
+                            f"Insira, por favor, a coluna inicial na qual você deseja inserir um {navio} (1 a {len(estado_jogo['matriz_partida_jogador1'][0])}): "
                         )
                     )
                 except:
@@ -272,7 +273,7 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                 ):
                     time.sleep(1)
                     print(
-                        f"Linha inválida, por favor selecione um posição entre 1 a {len(estado_jogo["matriz_partida_jogador1"])}."
+                        f"Linha inválida, por favor selecione um posição entre 1 a {len(estado_jogo['matriz_partida_jogador1'])}."
                     )
                     continue
 
@@ -281,7 +282,7 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                 ):
                     time.sleep(1)
                     print(
-                        f"Coluna inválida, por favor selecione um posição entre 1 a {len(estado_jogo["matriz_partida_jogador1"][0])}."
+                        f"Coluna inválida, por favor selecione um posição entre 1 a {len(estado_jogo['matriz_partida_jogador1'][0])}."
                     )
                     continue
 
@@ -321,7 +322,7 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                     continue
             lista_navios_para_adicionar[navio] -= 1
             time.sleep(0.75)
-            print("Navio posicionado com sucesso.")
+            print("\nNavio posicionado com sucesso.\n")
             time.sleep(0.5)
             desenhar_mapa_jogador(estado_jogo["matriz_partida_jogador1"])
 
@@ -376,7 +377,7 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, estado_jogo):
         == 0
     ):
         estado_jogo["posicoes_navios_jogador1"][
-            f"Navio_{len(estado_jogo["posicoes_navios_jogador1"]) + 1}"
+            f"Navio_{len(estado_jogo['posicoes_navios_jogador1']) + 1}"
         ] = {"Tipo_Navio": navio, "Posicoes": [posicao_inicial]}
         posicionar_navio(posicao_inicial, navio, 0, estado_jogo)
         return True
@@ -420,16 +421,16 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, estado_jogo):
     ) or verificar_existencia_navio(posicao_inicial, navio, 1, estado_jogo):
         pode_mover_direita = False
     escolher_direcao_pergunta = (
-        "Escolha a direção na qual você quer posicionar o seu navio:\n"
+        "\nEscolha a direção na qual você quer posicionar o seu navio:\n\n"
     )
     if pode_mover_cima:
-        escolher_direcao_pergunta += "1 — Cima\n"
+        escolher_direcao_pergunta += "1 — Cima ⬆️\n"
     if pode_mover_direita:
-        escolher_direcao_pergunta += "2 — Direita\n"
+        escolher_direcao_pergunta += "2 — Direita ➡️\n"
     if pode_mover_baixo:
-        escolher_direcao_pergunta += "3 — Baixo\n"
+        escolher_direcao_pergunta += "3 — Baixo ⬇️\n"
     if pode_mover_esquerda:
-        escolher_direcao_pergunta += "4 — Esquerda\n"
+        escolher_direcao_pergunta += "4 — Esquerda ⬅️\n"
 
     direcao_valida = False
     while not direcao_valida:
@@ -553,7 +554,7 @@ def posicionar_navio(posicao_inicial, navio, direcao, estado_jogo):
                     )
 
                 estado_jogo["posicoes_navios_jogador1"][
-                    f"Navio_{len(estado_jogo["posicoes_navios_jogador1"]) + 1}"
+                    f"Navio_{len(estado_jogo['posicoes_navios_jogador1']) + 1}"
                 ] = {"Tipo_Navio": navio, "Posicoes": lista_posicoes_navio}
             case 1:
                 lista_posicoes_navio = [[posicao_inicial[0], posicao_inicial[1]]]
@@ -567,7 +568,7 @@ def posicionar_navio(posicao_inicial, navio, direcao, estado_jogo):
                     )
 
                 estado_jogo["posicoes_navios_jogador1"][
-                    f"Navio_{len(estado_jogo["posicoes_navios_jogador1"]) + 1}"
+                    f"Navio_{len(estado_jogo['posicoes_navios_jogador1']) + 1}"
                 ] = {"Tipo_Navio": navio, "Posicoes": lista_posicoes_navio}
             case 2:
                 lista_posicoes_navio = [[posicao_inicial[0], posicao_inicial[1]]]
@@ -580,7 +581,7 @@ def posicionar_navio(posicao_inicial, navio, direcao, estado_jogo):
                     )
 
                 estado_jogo["posicoes_navios_jogador1"][
-                    f"Navio_{len(estado_jogo["posicoes_navios_jogador1"]) + 1}"
+                    f"Navio_{len(estado_jogo['posicoes_navios_jogador1']) + 1}"
                 ] = {"Tipo_Navio": navio, "Posicoes": lista_posicoes_navio}
             case 3:
                 lista_posicoes_navio = [[posicao_inicial[0], posicao_inicial[1]]]
@@ -594,7 +595,7 @@ def posicionar_navio(posicao_inicial, navio, direcao, estado_jogo):
                     )
 
                 estado_jogo["posicoes_navios_jogador1"][
-                    f"Navio_{len(estado_jogo["posicoes_navios_jogador1"]) + 1}"
+                    f"Navio_{len(estado_jogo['posicoes_navios_jogador1']) + 1}"
                 ] = {"Tipo_Navio": navio, "Posicoes": lista_posicoes_navio}
 
 
@@ -674,7 +675,7 @@ def verificar_e_posicionar_navio_inimigo(
         == 0
     ):
         estado_jogo["posicoes_navios_jogador2"][
-            f"Navio_{len(estado_jogo["posicoes_navios_jogador2"]) + 1}"
+            f"Navio_{len(estado_jogo['posicoes_navios_jogador2']) + 1}"
         ] = {"Tipo_Navio": navio, "Posicoes": [posicao_inicial]}
         posicionar_navio_inimigo(posicao_inicial, navio, 0, estado_jogo)
         return True
@@ -813,7 +814,7 @@ def posicionar_navio_inimigo(posicao_inicial, navio, direcao, estado_jogo):
                     )
 
                 estado_jogo["posicoes_navios_jogador2"][
-                    f"Navio_{len(estado_jogo["posicoes_navios_jogador2"]) + 1}"
+                    f"Navio_{len(estado_jogo['posicoes_navios_jogador2']) + 1}"
                 ] = {"Tipo_Navio": navio, "Posicoes": lista_posicoes_navio}
 
             case 1:
@@ -828,7 +829,7 @@ def posicionar_navio_inimigo(posicao_inicial, navio, direcao, estado_jogo):
                     )
 
                 estado_jogo["posicoes_navios_jogador2"][
-                    f"Navio_{len(estado_jogo["posicoes_navios_jogador2"]) + 1}"
+                    f"Navio_{len(estado_jogo['posicoes_navios_jogador2']) + 1}"
                 ] = {"Tipo_Navio": navio, "Posicoes": lista_posicoes_navio}
             case 2:
                 lista_posicoes_navio = [[posicao_inicial[0], posicao_inicial[1]]]
@@ -842,7 +843,7 @@ def posicionar_navio_inimigo(posicao_inicial, navio, direcao, estado_jogo):
                     )
 
                 estado_jogo["posicoes_navios_jogador2"][
-                    f"Navio_{len(estado_jogo["posicoes_navios_jogador2"]) + 1}"
+                    f"Navio_{len(estado_jogo['posicoes_navios_jogador2']) + 1}"
                 ] = {"Tipo_Navio": navio, "Posicoes": lista_posicoes_navio}
             case 3:
                 lista_posicoes_navio = [[posicao_inicial[0], posicao_inicial[1]]]
@@ -856,7 +857,7 @@ def posicionar_navio_inimigo(posicao_inicial, navio, direcao, estado_jogo):
                     )
 
                 estado_jogo["posicoes_navios_jogador2"][
-                    f"Navio_{len(estado_jogo["posicoes_navios_jogador2"]) + 1}"
+                    f"Navio_{len(estado_jogo['posicoes_navios_jogador2']) + 1}"
                 ] = {"Tipo_Navio": navio, "Posicoes": lista_posicoes_navio}
 
 
@@ -928,11 +929,13 @@ def partida_principal(estado_jogo):
     while True:
         try:
             time.sleep(1)
+            print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n")
             jogador_inicial = int(
                 input(
-                    "Quem irá começar?\n 1 — Jogador;\n 2 — Adversário;\n 3 — Aleatório.\nDecisão: "
+                    "Quem irá começar?\n\n 1 — Jogador;\n 2 — Adversário;\n 3 — Aleatório.\n\nDecisão: "
                 )
             )
+            "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
             if 1 <= jogador_inicial <= 3:
                 break  # valor válido, sai do loop
             else:
@@ -968,7 +971,7 @@ def partida_principal(estado_jogo):
             case 1:
                 time.sleep(1)
                 print(
-                    "Esse é o mapa de inteligência, ele indicará os seus erros e acertos durante o seu ataque."
+                    "Esse é o mapa de inteligência, ele indicará os seus erros e acertos durante o seu ataque\n\n."
                 )
                 time.sleep(0.5)
                 desenhar_mapa_jogador(estado_jogo["matriz_alvo_jogador1"])
@@ -977,7 +980,7 @@ def partida_principal(estado_jogo):
                 while not posicao_valida:
                     time.sleep(0.75)
                     posicao_ataque_linha = input(
-                        f"Insira, por favor, a linha na qual você deseja fazer seu ataque (1 a {len(estado_jogo["matriz_alvo_jogador1"])}): "
+                        f"Insira, por favor, a linha na qual você deseja fazer seu ataque (1 a {len(estado_jogo['matriz_alvo_jogador1'])}): "
                     )
                     if not posicao_ataque_linha.isdigit():
                         print("Insira apenas números, por favor.")
@@ -986,7 +989,7 @@ def partida_principal(estado_jogo):
                     posicao_ataque_linha = int(posicao_ataque_linha)
 
                     posicao_ataque_coluna = input(
-                        f"Insira, por favor, a coluna na qual você deseja fazer seu ataque (1 a {len(estado_jogo["matriz_alvo_jogador1"][0])}): "
+                        f"Insira, por favor, a coluna na qual você deseja fazer seu ataque (1 a {len(estado_jogo['matriz_alvo_jogador1'][0])}): "
                     )
                     if not posicao_ataque_coluna.isdigit():
                         print("Insira apenas números, por favor.")
@@ -999,7 +1002,7 @@ def partida_principal(estado_jogo):
                     ):
                         time.sleep(1)
                         print(
-                            f"Linha inválida, por favor selecione um posição entre 1 e {len(estado_jogo["matriz_alvo_jogador1"])}."
+                            f"Linha inválida, por favor selecione um posição entre 1 e {len(estado_jogo['matriz_alvo_jogador1'])}."
                         )
                         continue
 
@@ -1008,7 +1011,7 @@ def partida_principal(estado_jogo):
                     ):
                         time.sleep(1)
                         print(
-                            f"Coluna inválida, por favor selecione um posição entre 1 e {len(estado_jogo["matriz_alvo_jogador1"][0])}."
+                            f"Coluna inválida, por favor selecione um posição entre 1 e {len(estado_jogo['matriz_alvo_jogador1'][0])}."
                         )
                         continue
 
@@ -1048,7 +1051,7 @@ def partida_principal(estado_jogo):
                     == 6
                 ):
 
-                    print("NOSSA INTELIGÊNCIA DIZ QUE NOSSO ATAQUE FOI UM SUCESSO!")
+                    print("\nNOSSA INTELIGÊNCIA DIZ QUE NOSSO ATAQUE FOI UM SUCESSO!")
                     estado_jogo["matriz_alvo_jogador1"][posicao_ataque_linha][
                         posicao_ataque_coluna
                     ] = 5
@@ -1071,7 +1074,7 @@ def partida_principal(estado_jogo):
                     ] = 6
 
             case 2:
-                print("\nO inimigo irá atacar.\n")
+                print("\nO inimigo irá atacar 🔥\n")
                 time.sleep(0.75)
                 if len(lista_prioridades_inteligencia_artificial) == 0:
                     posicao_valida = False
@@ -1487,7 +1490,8 @@ def main():
                 encouracados_aliados_afundados += 1
 
         time.sleep(1)
-        print("\nO vencedor é...")
+        print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
+            "\nO vencedor é...")
         time.sleep(1)
         print(".")
         time.sleep(1)
@@ -1497,10 +1501,10 @@ def main():
         time.sleep(1)
 
         if vencedor == 1:
-            print("JOGADOR 1 VENCEU!\n")
+            print("🎆 JOGADOR 1 VENCEU! 🎆\n")
             time.sleep(1)
 
-            print(
+            print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
                 f"Navios Inimigos, afundados por nós:"
                 f"\nSubmarinos: {submarinos_inimigos_afundados};"
                 f"\nDestroiers: {destroiers_inimigos_afundados};"
@@ -1516,13 +1520,14 @@ def main():
                 f"\nDestroiers: {destroiers_aliados_afundados};"
                 f"\nCruzadores: {cruzadores_aliados_afundados};"
                 f"\nEncouraçados: {encouracados_aliados_afundados}."
+                "~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~"
             )
 
         elif vencedor == 2:
-            print("ADVERSÁRIO VENCEU!\n")
+            print("🎆 ADVERSÁRIO VENCEU! 🎆\n")
             time.sleep(1)
 
-            print(
+            print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
                 f"Nossos navios, afundados pelo Inimigo:"
                 f"\nSubmarinos: {submarinos_aliados_afundados};"
                 f"\nDestroiers: {destroiers_aliados_afundados};"
@@ -1538,17 +1543,19 @@ def main():
                 f"\nDestroiers: {destroiers_inimigos_afundados};"
                 f"\nCruzadores: {cruzadores_inimigos_afundados};"
                 f"\nEncouraçados: {encouracados_inimigos_afundados}.\n"
+                "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~"
             )
 
         time.sleep(2)
         print(
-            "Depois da batalha, nossa inteligência conseguiu descobrir a antiga localização de todos os navios do inimigo."
+            "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
+            "Depois da batalha, nossa inteligência conseguiu descobrir a antiga localização de todos os navios do inimigo.\n"
         )
         time.sleep(0.5)
         desenhar_minimapa(estado_jogo["matriz_partida_jogador2"])
 
         time.sleep(1)
-        decisao = input("\nDeseja jogar uma nova partida? (Sim ou Não): ")
+        decisao = input("Deseja jogar uma nova partida? (Sim ou Não): ")
         decisao = decisao.lower().replace(" ", "")
 
         decisao_nao_feita = True
