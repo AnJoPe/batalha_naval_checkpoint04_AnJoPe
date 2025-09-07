@@ -15,7 +15,7 @@ def regras():
         "\t|-------------------------------------------------------|\n"
         "\t| Tipo de Navio  |   Pequeno   |   Médio   |   Grande   |\n"
         "\t|-------------------------------------------------------|\n"
-        "\t|- Destroier     |      1      |     1     |      2     |\n"
+        "\t|- Destroier     |      2      |     1     |      2     |\n"
         "\t|- Submarinos    |      1      |     1     |      1     |\n"
         "\t|- Cruzador      |      x      |     1     |      1     |\n"
         "\t|- Encouraçado   |      x      |     1     |      2     |\n"
@@ -119,7 +119,7 @@ def preparar_mapas(tamanho_mapa):
 
     if tamanho_mapa == 1:
         estados_jogo_principal["numero_submarinos"] = 1
-        estados_jogo_principal["numero_destroiers"] = 1
+        estados_jogo_principal["numero_destroiers"] = 2
         estados_jogo_principal["numero_encouracados"] = 0
         estados_jogo_principal["numero_cruzadores"] = 0
 
@@ -340,22 +340,30 @@ def pode_expandir(posicao_inicial, navio, estado_jogo):
 
     # CHECA OS CANTOS PRA VER SE NÃO ESTÁ EM ALGUMA PAREDE
     # TAMBÉM CHECA SE TEM ALGUM CAMINHO SEM NAVIOS
-    if posicao_inicial[0] == 0 or verificar_existencia_navio(
+    if (posicao_inicial[0] == 0 or verificar_existencia_navio(
         posicao_inicial, navio, 0, estado_jogo
-    ):
+    ) or (posicao_inicial[0] - tamanho_navio) < 0):
         pode_expandir_cima = False
-    if posicao_inicial[0] == len(
-        estado_jogo["matriz_partida_jogador1"]
-    ) - 1 or verificar_existencia_navio(posicao_inicial, navio, 2, estado_jogo):
+
+    if (posicao_inicial[0] == len(estado_jogo["matriz_partida_jogador1"]) - 1 or
+            verificar_existencia_navio(posicao_inicial, navio, 2, estado_jogo) or
+                (posicao_inicial[0] + tamanho_navio) >= len(estado_jogo["matriz_partida_jogador1"])):
         pode_expandir_baixo = False
-    if posicao_inicial[1] == 0 or verificar_existencia_navio(
-        posicao_inicial, navio, 3, estado_jogo
-    ):
+
+    if (posicao_inicial[1] == 0 or
+            verificar_existencia_navio(posicao_inicial, navio, 3, estado_jogo) or
+                (posicao_inicial[1] - tamanho_navio) < 0):
         pode_expandir_esquerda = False
-    if posicao_inicial[1] == len(
-        estado_jogo["matriz_partida_jogador1"][0]
-    ) - 1 or verificar_existencia_navio(posicao_inicial, navio, 1, estado_jogo):
+
+    if (posicao_inicial[1] == len(estado_jogo["matriz_partida_jogador1"][0]) - 1 or
+            verificar_existencia_navio(posicao_inicial, navio, 1, estado_jogo) or
+                (posicao_inicial[1] + tamanho_navio) >= len(estado_jogo["matriz_partida_jogador1"])):
         pode_expandir_direita = False
+
+    #print(f"POSSO EXPANDIR CIMA?: {pode_expandir_cima}")
+    #print(f"POSSO EXPANDIR BAIXO?: {pode_expandir_baixo}")
+    #print(f"POSSO EXPANDIR ESQUERDA?: {pode_expandir_esquerda}")
+    #print(f"POSSO EXPANDIR DIREITA?: {pode_expandir_direita}")
 
     if (
         pode_expandir_cima
@@ -363,8 +371,10 @@ def pode_expandir(posicao_inicial, navio, estado_jogo):
         or pode_expandir_esquerda
         or pode_expandir_direita
     ):
+        #print("RETORNEI TRUE")
         return True
     else:
+        #print("RETORNEI FALSE")
         return False
 
 
@@ -424,13 +434,13 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, estado_jogo):
         "\nEscolha a direção na qual você quer posicionar o seu navio:\n\n"
     )
     if pode_mover_cima:
-        escolher_direcao_pergunta += "1 — Cima ⬆️\n"
+        escolher_direcao_pergunta += "1 — Cima ↑\n"
     if pode_mover_direita:
-        escolher_direcao_pergunta += "2 — Direita ➡️\n"
+        escolher_direcao_pergunta += "2 — Direita →\n"
     if pode_mover_baixo:
-        escolher_direcao_pergunta += "3 — Baixo ⬇️\n"
+        escolher_direcao_pergunta += "3 — Baixo ↓\n"
     if pode_mover_esquerda:
-        escolher_direcao_pergunta += "4 — Esquerda ⬅️\n"
+        escolher_direcao_pergunta += "4 — Esquerda ←\n"
 
     direcao_valida = False
     while not direcao_valida:
@@ -935,7 +945,7 @@ def partida_principal(estado_jogo):
                     "Quem irá começar?\n\n 1 — Jogador;\n 2 — Adversário;\n 3 — Aleatório.\n\nDecisão: "
                 )
             )
-            "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
+            print("\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n")
             if 1 <= jogador_inicial <= 3:
                 break  # valor válido, sai do loop
             else:
@@ -1519,7 +1529,7 @@ def main():
                 f"\nSubmarinos: {submarinos_aliados_afundados};"
                 f"\nDestroiers: {destroiers_aliados_afundados};"
                 f"\nCruzadores: {cruzadores_aliados_afundados};"
-                f"\nEncouraçados: {encouracados_aliados_afundados}."
+                f"\nEncouraçados: {encouracados_aliados_afundados}.\n"
                 "~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~"
             )
 
