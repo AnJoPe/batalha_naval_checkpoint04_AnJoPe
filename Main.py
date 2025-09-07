@@ -4,43 +4,47 @@ import random, time
 # Função para ver as regras e mecânicas do jogo
 def regras():
     print(
-        "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-        "REGRAS\n\n"
-        " - O jogo consiste em um tabuleiro 2D.\n"
-        " - Batalha Naval é um jogo clássico de estratégia\n"
-        " - O principal objetivo é afundar os navios do oponente antes que ele afunde os seus.\n"
-        " - Além disso, temos a mecânica de escolha de tamanho do mapa, entre 4x4 e 6x6\n"
-        " - Também adicionamos a mecânica de escolha da posição dos navios de forma manual ou aleatoria\n"
-        " - Para cada tamnho de mapa, há um limite de navios:\n\n"
-        "\t|-------------------------------------------------------|\n"
-        "\t| Tipo de Navio  |   Pequeno   |   Médio   |   Grande   |\n"
-        "\t|-------------------------------------------------------|\n"
-        "\t|- Destroier     |      2      |     1     |      2     |\n"
-        "\t|- Submarinos    |      1      |     1     |      1     |\n"
-        "\t|- Cruzador      |      x      |     1     |      1     |\n"
-        "\t|- Encouraçado   |      x      |     1     |      2     |\n"
-        "\t|-------------------------------------------------------|\n"
-        "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n"
+        "\n🌊⚓════════════════════════════════════════════════════════⚓🌊\n\n"
+        "📜 REGRAS DA BATALHA NAVAL 📜\n\n"
+        "🗺️  O jogo acontece em um tabuleiro 2D.\n"
+        "⚔️  Batalha Naval é um clássico jogo de estratégia.\n"
+        "🎯  Seu objetivo: afundar os navios inimigos antes que eles afundem os seus!\n"
+        "📐  Escolha o tamanho do mapa: 4x4 ou 6x6.\n"
+        "🚢  Posicione os navios manualmente ou de forma aleatória.\n\n"
+        "📌 Limite de navios por tamanho de mapa:\n\n"
+        "\t🚢-----------------------------------------------🚢\n"
+        "\t|   Tipo de Navio   |   4x4   |   5x5   |   6x6   |\n"
+        "\t🚢-----------------------------------------------🚢\n"
+        "\t| ⚔️ Destroier      |    2    |    1    |    2     |\n"
+        "\t| 🌊 Submarino     |    1    |    1    |    1     |\n"
+        "\t| 🏴‍☠️ Cruzador     |    -    |    1    |    1     |\n"
+        "\t| 🛡️ Encouraçado    |    -    |    1    |    2     |\n"
+        "\t🚢-----------------------------------------------🚢\n"
+        "\n🌊⚓════════════════════════════════════════════════════════⚓🌊\n"
     )
+
 
 
 def introducao():
     print(
-        "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-        "Bem Vindos à Batalha Naval ANJOPE\n"
-        "Desenvolvido por André Colombo / José Diogo / Pedro Miranda\n"
-        "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-        "Antes de começar a jogar, deseja ver as Regras?"
+        "\n🌊⚓~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~⚓🌊\n\n"
+        "      🚢  Bem-vindos à grande aventura: BATALHA NAVAL ANJOPE  🚢\n"
+        "                      💻 Desenvolvido por:\n"
+        "    👨‍💻 André Colombo | 👨‍💻 José Diogo | 👨‍💻 Pedro Miranda\n"
+        "\n🌊⚓~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~⚓🌊\n\n"
+        "📜 Antes de começar a jogar, deseja ver as Regras? (S/N)"
     )
 
-    ver_regras = input("S - Sim | N - Não: ")
-    if ver_regras == "sim" or ver_regras == "s" or ver_regras == "si" or ver_regras == "yes" or ver_regras == "ye" or ver_regras == "y":
+    ver_regras = input("👉 S - Sim | N - Não: ").lower()
+
+    if ver_regras in ["sim", "s", "si", "yes", "ye", "y"]:
         time.sleep(0.5)
         regras()
     else:
         print(
-            "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-            "Então vamos continuar\n"
+            "\n🌊⚓~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~⚓🌊\n\n"
+            "➡️  Então vamos continuar a aventura, Capitão! 🚢🔥\n"
+            "\n🌊⚓~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~⚓🌊\n"
         )
 
 
@@ -67,37 +71,49 @@ lista_ignorar_inteligencia_artificial = []
 # Função para escolher o tamanho do mapa
 def escolher_mapa():
     print(
-        "Escolha o tamanho do mapa desejado\n\n"
-        " 1 - Pequeno (4x4) \n 2 - Médio (5x5) \n 3 - Grande (6x6) \n"
-        "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n"
-    )
+    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n\n"
+    "🗺️  Escolha o tamanho do mapa desejado:\n\n"
+    "  1️⃣  Pequeno  (4x4)\n"
+    "  2️⃣  Médio    (5x5)\n"
+    "  3️⃣  Grande   (6x6)\n"
+    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+)
     # Variável para verificar se vai rodar o WHILE novamente ou se vai proseguir.
     verificar = 0
     while verificar == 0:
-        tamanho_mapa = int(input("Escolha: "))
+        tamanho_mapa = int(input("👉 Digite sua escolha, Capitão: "))
         match tamanho_mapa:
             case 1:
                 print(
-                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                    "Você escolheu o mapa Pequeno(4x4)!"
+                    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n\n"
+                    "✅ Você escolheu o mapa: 🗺️  Pequeno (4x4)! 🚢\n"
+                    "Prepare-se para a batalha, Capitão! ⚔️🔥\n"
+                    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
                 )
                 return 1
             case 2:
                 print(
-                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                    "Você escolheu o mapa Médio(5x5)!"
+                    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n\n"
+                    "✅ Você escolheu o mapa: 🗺️  Médio (5x5)! ⚓\n"
+                    "As águas estão ficando perigosas... mantenha-se atento, Capitão! 🌊👀\n"
+                    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
                 )
                 return 2
             case 3:
                 print(
-                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                    "Você escolheu o mapa Grande6(6x)!"
+                    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n\n"
+                    "✅ Você escolheu o mapa: 🗺️  Grande (6x6)! 🐉🚢\n"
+                    "Os mares sombrios aguardam sua coragem... 🌑⚔️\n"
+                    "A batalha final está prestes a começar, Capitão! 🔥\n"
+                    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
                 )
                 return 3
             case _:
                 print(
-                    "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                    "Valor inválido, escolha entre 1 e 3!\n"
+                    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n\n"
+                    "❌ Valor inválido, Capitão! Escolha apenas entre 1️⃣, 2️⃣ ou 3️⃣! ⚓\n"
+                    "Tente novamente e prepare-se para a aventura! 🚢🔥\n"
+                    "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
                 )
                 verificar = 0
 
@@ -211,11 +227,18 @@ def preparar_partida(estado_jogo):
         estado_jogo["numero_cruzadores"],
         estado_jogo,
     )
-    print("O adversário posicionou seus navios.\n"
-          "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n")
+    print(
+        "⚓👾 O adversário posicionou seus navios no tabuleiro! 🚢\n"
+        "Prepare-se para a batalha, Capitão! ⚔️🔥\n"
+        "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+    )
     time.sleep(1)
 
-    print("Nossa vez de posicionar navios...")
+    print(
+        "🚢⚓ É a nossa vez de posicionar os navios, Capitão! 🗺️\n"
+        "Escolha sabiamente suas posições para dominar os mares! 🌊🔥\n"
+        "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+    )
     time.sleep(1)
     gerar_navios_escolha(
         estado_jogo["numero_submarinos"],
@@ -246,7 +269,12 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
     if cruzadores > 0:
         lista_navios_para_adicionar["Cruzador"] = cruzadores
 
-    print("O mapa da batalha será assim:")
+    print(
+        "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+        "🗺️  O mapa da batalha será exibido assim, Capitão! 🚢⚔️\n"
+        "Prepare-se para a estratégia final nos mares! 🌊🔥\n"
+        "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+    )
     time.sleep(0.5)
     desenhar_mapa_jogador(estado_jogo["matriz_partida_jogador1"])
     for navio in lista_navios_para_adicionar:
@@ -257,23 +285,29 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                     time.sleep(0.5)
                     posicao_inicial_linha = int(
                         input(
-                            f"Insira, por favor, a linha inicial na qual você deseja inserir um {navio} (1 a {len(estado_jogo['matriz_partida_jogador1'])}): "
+                            f"🧭 Capitão, insira a linha inicial para posicionar o navio {navio} 🚢 "
+                            f"(1 a {len(estado_jogo['matriz_partida_jogador1'])}): "
                         )
                     )
                     posicao_inicial_coluna = int(
                         input(
-                            f"Insira, por favor, a coluna inicial na qual você deseja inserir um {navio} (1 a {len(estado_jogo['matriz_partida_jogador1'][0])}): "
+                            f"🧭 Capitão, agora insira a coluna inicial para posicionar o navio {navio} 🚢 "
+                            f"(1 a {len(estado_jogo['matriz_partida_jogador1'][0])}): "
                         )
                     )
                 except:
-                    print("Valor inválido, por favor insira um número")
+                    print(
+                        "\n❌ Valor inválido, Capitão! Por favor, insira um número válido ⚓🚢\n"
+                        "🧭 Use os instrumentos de navegação corretamente e tente novamente! 🌊🔥\n"
+                    )
 
                 if posicao_inicial_linha < 1 or posicao_inicial_linha > len(
                     estado_jogo["matriz_partida_jogador1"]
                 ):
                     time.sleep(1)
                     print(
-                        f"Linha inválida, por favor selecione um posição entre 1 a {len(estado_jogo['matriz_partida_jogador1'])}."
+                        f"❌ Linha inválida, Capitão! ⚓🚢 "
+                        f"Por favor selecione uma posição entre 1 e {len(estado_jogo['matriz_partida_jogador1'])} 🧭🌊\n"
                     )
                     continue
 
@@ -282,7 +316,8 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                 ):
                     time.sleep(1)
                     print(
-                        f"Coluna inválida, por favor selecione um posição entre 1 a {len(estado_jogo['matriz_partida_jogador1'][0])}."
+                        f"❌ Coluna inválida, Capitão! ⚓🚢 "
+                        f"Por favor selecione uma posição entre 1 e {len(estado_jogo['matriz_partida_jogador1'][0])} 🧭🌊\n"
                     )
                     continue
 
@@ -297,7 +332,8 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                 ):
                     time.sleep(1)
                     print(
-                        "Posição inválida, há um navio nessa posição! Tente novamente!"
+                        "❌ Posição inválida, Capitão! ⚓🚢 "
+                        "Já há um navio nessa posição! 🧭🌊 Tente novamente e mantenha a frota segura!\n"
                     )
                     continue
 
@@ -309,7 +345,8 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                     ):
                         time.sleep(1)
                         print(
-                            "O navio não tem espaço para ser posicionado. Tente novamente!"
+                            "❌ Espaço insuficiente, Capitão! ⚓🚢 "
+                            "O navio não cabe nessa posição! 🧭🌊 Reavalie sua estratégia e tente novamente!\n"
                         )
                         continue
 
@@ -322,7 +359,10 @@ def gerar_navios_escolha(submarinos, encouracados, destroiers, cruzadores, estad
                     continue
             lista_navios_para_adicionar[navio] -= 1
             time.sleep(0.75)
-            print("\nNavio posicionado com sucesso.\n")
+            print(
+                "\n✅ Navio posicionado com sucesso, Capitão! ⚓🚢\n"
+                "A frota está se fortalecendo! 🌊🔥\n"
+            )
             time.sleep(0.5)
             desenhar_mapa_jogador(estado_jogo["matriz_partida_jogador1"])
 
@@ -394,7 +434,10 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, estado_jogo):
 
     elif navio == "Submarino":
         time.sleep(1)
-        print("Há um navio nessa posição, impossível posicionar um submarino aqui.")
+        print(
+            "❌ Capitão! ⚓🚢 Há um navio nessa posição, impossível posicionar o submarino aqui! 🧭🌊\n"
+            "Reavalie a estratégia e escolha uma posição segura para sua frota! ⚔️🔥\n"
+        )
         return False
 
     quantidade_posicoes = identificadores_navios[navio]["Tamanho"]
@@ -402,7 +445,9 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, estado_jogo):
     if not pode_expandir(posicao_inicial, navio, estado_jogo):
         time.sleep(2)
         print(
-            f"O {navio} não pode ser colocado nessa posição, pois não há espaço suficiente em nenhuma direção. Tente novamente e escolha outro lugar!"
+            f"❌ Capitão! ⚓🚢 O {navio} não pode ser posicionado aqui, "
+            "pois não há espaço suficiente em nenhuma direção! 🧭🌊\n"
+            "Reavalie sua estratégia e escolha outro local seguro para a frota! ⚔️🔥\n"
         )
         return False
 
@@ -431,7 +476,7 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, estado_jogo):
     ) or verificar_existencia_navio(posicao_inicial, navio, 1, estado_jogo):
         pode_mover_direita = False
     escolher_direcao_pergunta = (
-        "\nEscolha a direção na qual você quer posicionar o seu navio:\n\n"
+        "\n🧭 Capitão, escolha a direção para posicionar seu navio 🚢:\n\n"
     )
     if pode_mover_cima:
         escolher_direcao_pergunta += "1 — Cima ↑\n"
@@ -445,35 +490,40 @@ def verificar_e_posicionar_navio(posicao_inicial, navio, estado_jogo):
     direcao_valida = False
     while not direcao_valida:
         time.sleep(0.75)
-        escolha_direcao = int(input(escolher_direcao_pergunta + "Direção: "))
+        escolha_direcao = int(input(escolher_direcao_pergunta + "👉 Capitão, escolha a direção do navio 🚢: "))
 
         if escolha_direcao < 1 or escolha_direcao > 4:
             time.sleep(1)
-            print("Direção inválida. Tente novamente!")
+            print("❌ Direção inválida, Capitão! ⚓🚢 "
+                    "Escolha uma direção correta para o navio 🧭🌊 e tente novamente!\n")
             continue
 
         if escolha_direcao == 1 and not pode_mover_cima:
             time.sleep(1)
             print(
-                "Não há espaço para você posicionar o navio direcionado para cima. Tente novamente!"
+                "❌ Capitão! ⚓🚢 Não há espaço para posicionar o navio para cima ⬆️🧭🌊\n"
+                "Reavalie a estratégia e escolha outra direção segura para a frota! ⚔️🔥\n"
             )
             continue
         if escolha_direcao == 2 and not pode_mover_direita:
             time.sleep(1)
             print(
-                "Não há espaço para você posicionar o navio direcionado para a direita. Tente novamente!"
+                "❌ Capitão! ⚓🚢 Não há espaço para posicionar o navio para a direita ➡️🧭🌊\n"
+                "Reavalie a estratégia e escolha outra direção segura para a frota! ⚔️🔥\n"
             )
             continue
         if escolha_direcao == 3 and not pode_mover_baixo:
             time.sleep(1)
             print(
-                "Não há espaço para você posicionar o navio direcionado para baixo. Tente novamente!"
+                "❌ Capitão! ⚓🚢 Não há espaço para posicionar o navio para baixo ⬇️🧭🌊\n"
+                "Reavalie a estratégia e escolha outra direção segura para a frota! ⚔️🔥\n"
             )
             continue
         if escolha_direcao == 4 and not pode_mover_esquerda:
             time.sleep(1)
             print(
-                "Não há espaço para você posicionar o navio direcionado para a esquerda. Tente novamente!"
+                "❌ Capitão! ⚓🚢 Não há espaço para posicionar o navio para a esquerda ⬅️🧭🌊\n"
+                "Reavalie a estratégia e escolha outra direção segura para a frota! ⚔️🔥\n"
             )
             continue
 
@@ -939,41 +989,63 @@ def partida_principal(estado_jogo):
     while True:
         try:
             time.sleep(1)
-            print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n")
+            print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n")
             jogador_inicial = int(
                 input(
-                    "Quem irá começar?\n\n 1 — Jogador;\n 2 — Adversário;\n 3 — Aleatório.\n\nDecisão: "
+                    "🧭 Capitão, quem irá iniciar a batalha? ⚔️🚢\n\n"
+                    "  1️⃣ — Jogador\n"
+                    "  2️⃣ — Adversário 👾\n"
+                    "  3️⃣ — Aleatório 🎲\n\n"
+                    "👉 Decisão: "
                 )
             )
-            print("\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n")
+            print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n\n")
             if 1 <= jogador_inicial <= 3:
                 break  # valor válido, sai do loop
             else:
                 time.sleep(1)
-                print("Opção inválida. Escolha entre 1 e 3.")
+                print(
+                    "❌ Opção inválida, Capitão! ⚓🚢 "
+                    "Escolha apenas entre 1️⃣, 2️⃣ ou 3️⃣ 🧭🌊\n"
+                    "Tome cuidado e faça a escolha certa para iniciar a batalha! ⚔️🔥\n"
+                )
         except ValueError:
             time.sleep(1)
-            print("Entrada inválida. Digite apenas números inteiros.")
+            print(
+                "❌ Entrada inválida, Capitão! ⚓🚢 "
+                "Digite apenas números inteiros 🧭🌊\n"
+                "Use os instrumentos de navegação corretamente e tente novamente! ⚔️🔥\n"
+            )
 
     if jogador_inicial == 3:
         jogador_atual = random.randrange(1, 3)
         time.sleep(1)
-        print(f"Seleção aleatória: {jogador_atual}")
+        print(
+            f"🎲 Seleção aleatória concluída! ⚓🚢\n"
+            f"➡️ {jogador_atual} ⚔️🔥\n"
+        )
     else:
         jogador_atual = jogador_inicial
 
     time.sleep(1)
-    print("\n\nQuem iniciará a partida:")
+    print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n")
+    print("🧭 Determinando quem iniciará a partida... ⚔️🚢")
     time.sleep(0.75)
     if jogador_atual == 1:
-        print("Jogador")
+        print("➡️ O Capitão Jogador irá comandar a primeira jogada! 🔥")
     else:
-        print("Adversário")
+        print("➡️ O Capitão Adversário assumirá o comando da primeira jogada! 👾⚔️")
+    print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n")
 
     partida_em_progresso = True
 
     time.sleep(0.85)
-    print("\nBatalha iniciada. Boa Sorte!\n\n")
+    print(
+        "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n\n"
+        "⚔️🚢 A batalha começou, Capitão! 🧭\n"
+        "Prepare-se para conquistar os mares e afundar os navios inimigos! 🌊🔥\n\n"
+        "🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+    )
     time.sleep(1.1)
 
     while partida_em_progresso:
@@ -981,7 +1053,9 @@ def partida_principal(estado_jogo):
             case 1:
                 time.sleep(1)
                 print(
-                    "Esse é o mapa de inteligência, ele indicará os seus erros e acertos durante o seu ataque\n\n."
+                    "\n🧭 Capitão, este é o Mapa de Inteligência! ⚓🚢\n"
+                    "Ele revelará seus acertos e erros durante os ataques inimigos e os seus! 🌊⚔️\n"
+                    "Use-o estrategicamente para dominar os mares! 🔥🗺️\n"
                 )
                 time.sleep(0.5)
                 desenhar_mapa_jogador(estado_jogo["matriz_alvo_jogador1"])
@@ -990,19 +1064,29 @@ def partida_principal(estado_jogo):
                 while not posicao_valida:
                     time.sleep(0.75)
                     posicao_ataque_linha = input(
-                        f"Insira, por favor, a linha na qual você deseja fazer seu ataque (1 a {len(estado_jogo['matriz_alvo_jogador1'])}): "
+                        f"🧭 Capitão, insira a linha para realizar seu ataque 🚢⚔️ "
+                        f"(1 a {len(estado_jogo['matriz_alvo_jogador1'])}): "
                     )
                     if not posicao_ataque_linha.isdigit():
-                        print("Insira apenas números, por favor.")
+                        print(
+                            "❌ Entrada inválida, Capitão! ⚓🚢 "
+                            "Insira apenas números inteiros 🧭🌊\n"
+                            "Use os instrumentos de navegação corretamente e tente novamente! ⚔️🔥\n"
+                        )
                         continue
 
                     posicao_ataque_linha = int(posicao_ataque_linha)
 
                     posicao_ataque_coluna = input(
-                        f"Insira, por favor, a coluna na qual você deseja fazer seu ataque (1 a {len(estado_jogo['matriz_alvo_jogador1'][0])}): "
+                        f"🧭 Capitão, insira a coluna para realizar seu ataque 🚢⚔️ "
+                        f"(1 a {len(estado_jogo['matriz_alvo_jogador1'][0])}): "
                     )
                     if not posicao_ataque_coluna.isdigit():
-                        print("Insira apenas números, por favor.")
+                        print(
+                            "❌ Entrada inválida, Capitão! ⚓🚢 "
+                            "Insira apenas números inteiros para a coluna 🧭🌊\n"
+                            "Use os instrumentos de navegação corretamente e tente novamente! ⚔️🔥\n"
+                        )
                         continue
 
                     posicao_ataque_coluna = int(posicao_ataque_coluna)
@@ -1012,7 +1096,9 @@ def partida_principal(estado_jogo):
                     ):
                         time.sleep(1)
                         print(
-                            f"Linha inválida, por favor selecione um posição entre 1 e {len(estado_jogo['matriz_alvo_jogador1'])}."
+                            f"❌ Linha inválida, Capitão! ⚓🚢 "
+                            f"Por favor selecione uma posição entre 1 e {len(estado_jogo['matriz_alvo_jogador1'])} 🧭🌊\n"
+                            "Escolha sabiamente e mire com precisão! ⚔️🔥\n"
                         )
                         continue
 
@@ -1021,7 +1107,9 @@ def partida_principal(estado_jogo):
                     ):
                         time.sleep(1)
                         print(
-                            f"Coluna inválida, por favor selecione um posição entre 1 e {len(estado_jogo['matriz_alvo_jogador1'][0])}."
+                            f"❌ Coluna inválida, Capitão! ⚓🚢 "
+                            f"Por favor selecione uma posição entre 1 e {len(estado_jogo['matriz_alvo_jogador1'][0])} 🧭🌊\n"
+                            "Escolha sabiamente e mire com precisão! ⚔️🔥\n"
                         )
                         continue
 
@@ -1043,7 +1131,9 @@ def partida_principal(estado_jogo):
                 ):
 
                     print(
-                        "NOSSA INTELIGÊNCIA INDICA QUE JÁ ATACAMOS ESSAS COORDENADAS!"
+                        "❌ Atenção, Capitão! ⚓🚢\n"
+                        "Nossa inteligência indica que já atacamos essas coordenadas! 🧭🌊\n"
+                        "Escolha um novo alvo com sabedoria para dominar os mares! ⚔️🔥\n"
                     )
 
                 elif (
@@ -1061,7 +1151,10 @@ def partida_principal(estado_jogo):
                     == 6
                 ):
 
-                    print("\nNOSSA INTELIGÊNCIA DIZ QUE NOSSO ATAQUE FOI UM SUCESSO!")
+                    print(
+                        "\n✅ Capitão! ⚓🚢 Nossa inteligência indica que o ataque foi um sucesso! 🌊⚔️\n"
+                        "O inimigo foi atingido! Prepare-se para o próximo movimento estratégico! 🔥🧭\n"
+                    )
                     estado_jogo["matriz_alvo_jogador1"][posicao_ataque_linha][
                         posicao_ataque_coluna
                     ] = 5
@@ -1078,13 +1171,19 @@ def partida_principal(estado_jogo):
                                 ].remove([posicao_ataque_linha, posicao_ataque_coluna])
 
                 else:
-                    print("NOSSA INTELIGÊNCIA DIZ QUE NOSSO ATAQUE FOI UM FRACASSO!")
+                    print(
+                        "❌ Capitão! ⚓🚢 Nossa inteligência indica que o ataque falhou! 🌊⚔️\n"
+                        "O inimigo saiu ileso. Reavalie sua estratégia e prepare o próximo ataque! 🔥🧭\n"
+                    )
                     estado_jogo["matriz_alvo_jogador1"][posicao_ataque_linha][
                         posicao_ataque_coluna
                     ] = 6
 
             case 2:
-                print("\nO inimigo irá atacar 🔥\n")
+                print(
+                    "\n⚠️ Capitão! O inimigo está prestes a atacar! 🔥🚢\n"
+                    "Prepare-se para defender a frota e reagir estrategicamente! 🧭⚔️🌊\n"
+                )
                 time.sleep(0.75)
                 if len(lista_prioridades_inteligencia_artificial) == 0:
                     posicao_valida = False
@@ -1144,7 +1243,10 @@ def partida_principal(estado_jogo):
                             == 6
                         ):
                             time.sleep(0.65)
-                            print("O INIMIGO ACERTOU EM CHEIO!")
+                            print(
+                                "💥 Capitão! ⚓🚢 O inimigo acertou em cheio! 🌊⚔️\n"
+                                "A frota sofreu danos! Reorganize suas defesas e prepare o próximo ataque! 🔥🧭\n"
+                            )
                             estado_jogo["matriz_partida_jogador1"][
                                 posicao_ataque_linha_jogador_humano
                             ][posicao_ataque_coluna_jogador_humano] = 5
@@ -1217,7 +1319,8 @@ def partida_principal(estado_jogo):
                         else:
                             time.sleep(0.65)
                             print(
-                                "O ATAQUE DO INIMIGO FOI EM VÃO! APROVEITEMOS ESSA OPORTUNIDADE!"
+                                "✅ Capitão! ⚓🚢 O ataque do inimigo foi em vão! 🌊⚔️\n"
+                                "A frota permanece intacta! Aproveitem esta oportunidade para contra-atacar! 🔥🧭\n"
                             )
                             lista_ignorar_inteligencia_artificial.append(
                                 [
@@ -1285,7 +1388,10 @@ def partida_principal(estado_jogo):
                             == 6
                         ):
                             time.sleep(0.65)
-                            print("O INIMIGO ACERTOU EM CHEIO!")
+                            print(
+                                "💥 Capitão! ⚓🚢 O inimigo acertou em cheio! 🌊⚔️\n"
+                                "A frota sofreu danos! Reorganize suas defesas e prepare o próximo ataque! 🔥🧭\n"
+                            )
                             estado_jogo["matriz_partida_jogador1"][
                                 posicao_ataque_linha_jogador_humano
                             ][posicao_ataque_coluna_jogador_humano] = 5
@@ -1358,7 +1464,8 @@ def partida_principal(estado_jogo):
                         else:
                             time.sleep(0.65)
                             print(
-                                "O ATAQUE DO INIMIGO FOI EM VÃO! APROVEITEMOS ESSA OPORTUNIDADE!"
+                                "✅ Capitão! ⚓🚢 O ataque do inimigo foi em vão! 🌊⚔️\n"
+                                "A frota permanece intacta! Aproveitem esta oportunidade para contra-atacar! 🔥🧭\n"
                             )
 
                         if [
@@ -1373,7 +1480,10 @@ def partida_principal(estado_jogo):
                             )
                         ataque_valido = True
                 time.sleep(1)
-                print("\nAqui está um mini-mapa indicando os danos que sofremos:")
+                print(
+                    "\n🗺️ Capitão, aqui está o Mini-Mapa de Inteligência da frota! ⚓🚢\n"
+                    "Ele indica os danos que sofremos e ajuda a planejar nosso próximo movimento estratégico! 🌊⚔️🔥\n"
+                )
                 time.sleep(0.5)
                 desenhar_minimapa(estado_jogo["matriz_partida_jogador1"])
                 time.sleep(1)
@@ -1424,10 +1534,18 @@ def main():
         vencedor = partida_principal(estado_jogo)
 
         time.sleep(1)
-        print("\nFIM DA PARTIDA!!!\n")
+        print(
+            "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+            "🏴‍☠️ FIM DA PARTIDA, Capitão! ⚔️🚢\n"
+            "A batalha terminou nos mares! 🔥🧭\n"
+            "🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+        )
 
         time.sleep(1.5)
-        print("Aqui está um mini-mapa dos ataques feitos por nós, no inimigo.\n")
+        print(
+            "\n🗺️ Capitão, aqui está o Mini-Mapa de Inteligência do inimigo! ⚓🚢\n"
+            "Ele indica os ataques que realizamos e ajuda a planejar nossos próximos movimentos estratégicos! 🌊⚔️🔥\n"
+        )
         time.sleep(0.5)
         desenhar_minimapa(estado_jogo["matriz_alvo_jogador1"])
 
@@ -1500,8 +1618,8 @@ def main():
                 encouracados_aliados_afundados += 1
 
         time.sleep(1)
-        print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-            "\nO vencedor é...")
+        print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n")
+        print("🧭 Capitão, a tensão nos mares aumenta... Quem será o vencedor? ⚔️🚢")
         time.sleep(1)
         print(".")
         time.sleep(1)
@@ -1509,63 +1627,77 @@ def main():
         time.sleep(1)
         print("...")
         time.sleep(1)
+        print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n")
+
 
         if vencedor == 1:
-            print("🎆 JOGADOR 1 VENCEU! 🎆\n")
+            print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+                    "🎆🏴‍☠️ PARABÉNS, Capitão Jogador 1! ⚔️🚢\n"
+                    "Você conquistou os mares e afundou a frota inimiga! 🌊🔥🧭\n"
+                    "🌊⚓═══════════════════════════════════════════════⚓🌊\n")
             time.sleep(1)
 
-            print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                f"Navios Inimigos, afundados por nós:"
-                f"\nSubmarinos: {submarinos_inimigos_afundados};"
-                f"\nDestroiers: {destroiers_inimigos_afundados};"
-                f"\nCruzadores: {cruzadores_inimigos_afundados};"
-                f"\nEncouraçados: {encouracados_inimigos_afundados}.\n"
+            print(
+                "🛳️⚓ Resumo da Batalha ⚓🛳️\n"
+                f"Submarinos inimigos afundados: {submarinos_inimigos_afundados} 🐋\n"
+                f"Destroiers inimigos afundados: {destroiers_inimigos_afundados} 🚢\n"
+                f"Cruzadores inimigos afundados: {cruzadores_inimigos_afundados} ⛴️\n"
+                f"Encouraçados inimigos afundados: {encouracados_inimigos_afundados} 🛳️\n"
+                "🌊⚓═══════════════════════════════════════════════⚓🌊\n"
             )
 
             time.sleep(1)
 
             print(
-                f"Nossos navios, afundados pelo Inimigo:"
-                f"\nSubmarinos: {submarinos_aliados_afundados};"
-                f"\nDestroiers: {destroiers_aliados_afundados};"
-                f"\nCruzadores: {cruzadores_aliados_afundados};"
-                f"\nEncouraçados: {encouracados_aliados_afundados}.\n"
-                "~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~"
+                "⚔️🛡️ Relatório de Danos da Frota ⚓🚢\n"
+                f"Submarinos aliados afundados: {submarinos_aliados_afundados} 🐋\n"
+                f"Destroiers aliados afundados: {destroiers_aliados_afundados} 🚢\n"
+                f"Cruzadores aliados afundados: {cruzadores_aliados_afundados} ⛴️\n"
+                f"Encouraçados aliados afundados: {encouracados_aliados_afundados} 🛳️\n"
+                "🌊⚓═══════════════════════════════════════════════⚓🌊\n"
             )
 
         elif vencedor == 2:
-            print("🎆 ADVERSÁRIO VENCEU! 🎆\n")
+            print(
+                "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+                "💀🏴‍☠️ ALERTA, Capitão! O adversário venceu! ⚔️🚢\n"
+                "Nossa frota foi derrotada nos mares! 🌊🔥🧭\n"
+                "🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+            )
             time.sleep(1)
 
-            print("~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-                f"Nossos navios, afundados pelo Inimigo:"
-                f"\nSubmarinos: {submarinos_aliados_afundados};"
-                f"\nDestroiers: {destroiers_aliados_afundados};"
-                f"\nCruzadores: {cruzadores_aliados_afundados};"
-                f"\nEncouraçados: {encouracados_aliados_afundados}."
+            print(
+                "⚔️🛡️ Relatório de Perdas da Frota ⚓🚢\n"
+                f"Submarinos aliados afundados: {submarinos_aliados_afundados} 🐋\n"
+                f"Destroiers aliados afundados: {destroiers_aliados_afundados} 🚢\n"
+                f"Cruzadores aliados afundados: {cruzadores_aliados_afundados} ⛴️\n"
+                f"Encouraçados aliados afundados: {encouracados_aliados_afundados} 🛳️\n"
+                "🌊⚓═══════════════════════════════════════════════⚓🌊\n"
             )
 
             time.sleep(1)
 
             print(
-                f"Navios Inimigos, afundados por nós:"
-                f"\nSubmarinos: {submarinos_inimigos_afundados};"
-                f"\nDestroiers: {destroiers_inimigos_afundados};"
-                f"\nCruzadores: {cruzadores_inimigos_afundados};"
-                f"\nEncouraçados: {encouracados_inimigos_afundados}.\n"
-                "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~"
+                "🛳️⚓ Relatório de Conquistas ⚓🛳️\n"
+                f"Submarinos inimigos afundados: {submarinos_inimigos_afundados} 🐋\n"
+                f"Destroiers inimigos afundados: {destroiers_inimigos_afundados} 🚢\n"
+                f"Cruzadores inimigos afundados: {cruzadores_inimigos_afundados} ⛴️\n"
+                f"Encouraçados inimigos afundados: {encouracados_inimigos_afundados} 🛳️\n"
+                "🌊⚓═══════════════════════════════════════════════⚓🌊\n"
             )
 
         time.sleep(2)
         print(
-            "\n~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~\n\n"
-            "Depois da batalha, nossa inteligência conseguiu descobrir a antiga localização de todos os navios do inimigo.\n"
+            "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
+            "🧭 Capitão, após a batalha, nossa inteligência revelou a antiga localização de todos os navios inimigos! ⚓🚢\n"
+            "Use essas informações para planejar futuras estratégias e dominar os mares! 🌊⚔️🔥\n"
+            "🌊⚓═══════════════════════════════════════════════⚓🌊\n"
         )
         time.sleep(0.5)
         desenhar_minimapa(estado_jogo["matriz_partida_jogador2"])
 
         time.sleep(1)
-        decisao = input("Deseja jogar uma nova partida? (Sim ou Não): ")
+        decisao = input("🧭 Capitão, deseja zarpar novamente para uma nova batalha? ⚓🚢 (Sim ou Não): ")
         decisao = decisao.lower().replace(" ", "")
 
         decisao_nao_feita = True
@@ -1579,13 +1711,13 @@ def main():
                 or decisao == "y"
             ):
                 time.sleep(1)
-                print("Recomeçando partida.")
+                print("🌊⚓ Recomeçando a batalha. ⚓🚢")
                 time.sleep(0.5)
-                print("Recomeçando partida..")
+                print("🌊⚓ Recomeçando a batalha.. ⚓🚢")
                 time.sleep(0.5)
-                print("Recomeçando partida...")
+                print("🌊⚓ Recomeçando a batalha... ⚓🚢")
                 time.sleep(0.5)
-                print("Recomeçando partida....")
+                print("🌊⚓ Recomeçando a batalha.... ⚓🚢")
                 time.sleep(1)
                 print("\n\n\n")
 
@@ -1600,9 +1732,9 @@ def main():
                 or decisao == "no"
             ):
                 time.sleep(1)
-                print("Obrigado por jogar!")
+                print("⚓🚢 Obrigado por jogar, Capitão! 🌊🧭")
                 time.sleep(1)
-                print("Finalizando o programa.")
+                print("⚓ Finalizando a batalha e recolhendo a frota... ⚔️🔥")
                 time.sleep(2)
 
                 decisao_nao_feita = False
