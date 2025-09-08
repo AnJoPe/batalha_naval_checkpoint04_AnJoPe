@@ -1312,10 +1312,13 @@ def desenhar_mapa_jogador(matriz):
 
 # Função com a lógica da partida
 def partida_principal(estado_jogo):
+    # Sairemos do looping da partida manualmente
     while True:
+        # Tentaremos decidir quem vai começar a partida
         try:
             time.sleep(1)
             print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n")
+            # Input e casting da seleção do jogador
             jogador_inicial = int(
                 input(
                     "🧭 Capitão, quem irá iniciar a batalha? ⚔️🚢\n\n"
@@ -1335,6 +1338,8 @@ def partida_principal(estado_jogo):
                     "Escolha apenas entre 1️⃣, 2️⃣ ou 3️⃣ 🧭🌊\n"
                     "Tome cuidado e faça a escolha certa para iniciar a batalha! ⚔️🔥\n"
                 )
+
+        # Caso tenha algum erro no valor inserido pelo usuário
         except ValueError:
             time.sleep(1)
             print(
@@ -1343,7 +1348,9 @@ def partida_principal(estado_jogo):
                 "Use os instrumentos de navegação corretamente e tente novamente! ⚔️🔥\n"
             )
 
+    # Se ele escolheu aleatoriamente
     if jogador_inicial == 3:
+        # Escolher um numero aleatório entre 1 e 2 (vai um a menos)
         jogador_atual = random.randrange(1, 3)
         time.sleep(1)
         print(
@@ -1375,7 +1382,10 @@ def partida_principal(estado_jogo):
     time.sleep(1.1)
 
     while partida_em_progresso:
+        # Looping da partida
+            # Switch para detectar quem é o responsável pelo turno atual
         match jogador_atual:
+            # se for 1, o responsável é o jogador
             case 1:
                 time.sleep(1)
                 print(
@@ -1384,15 +1394,18 @@ def partida_principal(estado_jogo):
                     "Use-o estrategicamente para dominar os mares! 🔥🗺️\n"
                 )
                 time.sleep(0.5)
+                # Desenhar o mapa da frota do usuário
                 desenhar_mapa_jogador(estado_jogo["matriz_alvo_jogador1"])
 
                 posicao_valida = False
+                # Enquanto não tiver encontrado uma posição de ataque válida
                 while not posicao_valida:
                     time.sleep(0.75)
                     posicao_ataque_linha = input(
                         f"🧭 Capitão, insira a linha para realizar seu ataque 🚢⚔️ "
                         f"(1 a {len(estado_jogo['matriz_alvo_jogador1'])}): "
                     )
+                    # Se a linha inserida não for um digito
                     if not posicao_ataque_linha.isdigit():
                         print(
                             "❌ Entrada inválida, Capitão! ⚓🚢 "
@@ -1401,12 +1414,14 @@ def partida_principal(estado_jogo):
                         )
                         continue
 
+                    # Casting para inteiro
                     posicao_ataque_linha = int(posicao_ataque_linha)
 
                     posicao_ataque_coluna = input(
                         f"🧭 Capitão, insira a coluna para realizar seu ataque 🚢⚔️ "
                         f"(1 a {len(estado_jogo['matriz_alvo_jogador1'][0])}): "
                     )
+                    # Se a coluna inserida não for um digito
                     if not posicao_ataque_coluna.isdigit():
                         print(
                             "❌ Entrada inválida, Capitão! ⚓🚢 "
@@ -1415,8 +1430,10 @@ def partida_principal(estado_jogo):
                         )
                         continue
 
+                    # Casting para inteiro
                     posicao_ataque_coluna = int(posicao_ataque_coluna)
 
+                    # Checar se a linha inserida está dentro dos limites
                     if posicao_ataque_linha < 1 or posicao_ataque_linha > len(
                         estado_jogo["matriz_partida_jogador1"]
                     ):
@@ -1428,6 +1445,7 @@ def partida_principal(estado_jogo):
                         )
                         continue
 
+                    # Checar se a coluna inserida está dentro dos limites
                     if posicao_ataque_coluna < 1 or posicao_ataque_coluna > len(
                         estado_jogo["matriz_alvo_jogador1"][0]
                     ):
@@ -1438,13 +1456,13 @@ def partida_principal(estado_jogo):
                             "Escolha sabiamente e mire com precisão! ⚔️🔥\n"
                         )
                         continue
-
                     posicao_ataque_linha -= 1  # as listas começam do zero
                     posicao_ataque_coluna -= 1  # as listas começam do zero
 
                     posicao_valida = True
 
                 time.sleep(0.75)
+                # Checa se a posição atacada já não foi atacada anteriormente
                 if (
                     estado_jogo["matriz_alvo_jogador1"][posicao_ataque_linha][
                         posicao_ataque_coluna
@@ -1462,6 +1480,7 @@ def partida_principal(estado_jogo):
                         "Escolha um novo alvo com sabedoria para dominar os mares! ⚔️🔥\n"
                     )
 
+                # Checa se a posição atacada não é água e nem foi atacada anteriormente
                 elif (
                     not estado_jogo["matriz_partida_jogador2"][posicao_ataque_linha][
                         posicao_ataque_coluna
@@ -1481,47 +1500,60 @@ def partida_principal(estado_jogo):
                         "\n✅ Capitão! ⚓🚢 Nossa inteligência indica que o ataque foi um sucesso! 🌊⚔️\n"
                         "O inimigo foi atingido! Prepare-se para o próximo movimento estratégico! 🔥🧭\n"
                     )
+                    # Declara que a posição na matriz alvo do jogador 1 foi um acerto
                     estado_jogo["matriz_alvo_jogador1"][posicao_ataque_linha][
                         posicao_ataque_coluna
                     ] = 5
+                    # Itera sobre os navios do adversário
                     for nav in estado_jogo["posicoes_navios_jogador2"]:
                         for posicao in estado_jogo["posicoes_navios_jogador2"][nav][
                             "Posicoes"
                         ]:
+                            # Se a posição da iteração atual coincidir com a posição de ataque do jogador
                             if (
                                 posicao[0] == posicao_ataque_linha
                                 and posicao[1] == posicao_ataque_coluna
                             ):
+                                # Remova a posição do navio atacado
                                 estado_jogo["posicoes_navios_jogador2"][nav][
                                     "Posicoes"
                                 ].remove([posicao_ataque_linha, posicao_ataque_coluna])
 
+                # Caso tenhamos errado
                 else:
                     print(
                         "❌ Capitão! ⚓🚢 Nossa inteligência indica que o ataque falhou! 🌊⚔️\n"
                         "O inimigo saiu ileso. Reavalie sua estratégia e prepare o próximo ataque! 🔥🧭\n"
                     )
+
+                    # Declara que a posição na matriz alvo do jogador 1 foi um erro
                     estado_jogo["matriz_alvo_jogador1"][posicao_ataque_linha][
                         posicao_ataque_coluna
                     ] = 6
 
+            # se for 2, o responsável é o adversário
             case 2:
                 print(
                     "\n⚠️ Capitão! O inimigo está prestes a atacar! 🔥🚢\n"
                     "Prepare-se para defender a frota e reagir estrategicamente! 🧭⚔️🌊\n"
                 )
                 time.sleep(0.75)
+                # Se não houver nenhuma prioridade de ataque na memória da I.A.
                 if len(lista_prioridades_inteligencia_artificial) == 0:
                     posicao_valida = False
 
+                    # Seleciona uma linha aleatória da matriz
                     posicao_ataque_linha_jogador_humano = random.randrange(
                         0, len(estado_jogo["matriz_partida_jogador1"])
                     )
+                    # Seleciona uma coluna aleatória da matriz
                     posicao_ataque_coluna_jogador_humano = random.randrange(
                         0, len(estado_jogo["matriz_partida_jogador1"][0])
                     )
 
+                    # Enquanto não encontrar uma posição de ataque válida
                     while not posicao_valida:
+                        # Tentar novamente
                         posicao_ataque_linha_jogador_humano = random.randrange(
                             0, len(estado_jogo["matriz_partida_jogador1"])
                         )
@@ -1530,6 +1562,7 @@ def partida_principal(estado_jogo):
                             0, len(estado_jogo["matriz_partida_jogador1"][0])
                         )
 
+                        # Checa se a linha está dentro dos limites da matriz
                         if (
                             posicao_ataque_linha_jogador_humano < 0
                             or posicao_ataque_linha_jogador_humano
@@ -1537,6 +1570,7 @@ def partida_principal(estado_jogo):
                         ):
                             continue
 
+                        # Checa se a coluna está dentro dos limites da matriz
                         if (
                             posicao_ataque_coluna_jogador_humano < 0
                             or posicao_ataque_coluna_jogador_humano
@@ -1544,6 +1578,7 @@ def partida_principal(estado_jogo):
                         ):
                             continue
 
+                        # Checa se a posição selecionada já não foi atacada antes
                         if [
                             posicao_ataque_linha_jogador_humano,
                             posicao_ataque_coluna_jogador_humano,
@@ -1554,6 +1589,7 @@ def partida_principal(estado_jogo):
 
                     ataque_valido = False
                     while not ataque_valido:
+                        # Checa se o inimigo acertou um navio nosso
                         if (
                             not estado_jogo["matriz_partida_jogador1"][
                                 posicao_ataque_linha_jogador_humano
@@ -1573,20 +1609,24 @@ def partida_principal(estado_jogo):
                                 "💥 Capitão! ⚓🚢 O inimigo acertou em cheio! 🌊⚔️\n"
                                 "A frota sofreu danos! Reorganize suas defesas e prepare o próximo ataque! 🔥🧭\n"
                             )
+                            # Declara que a posição na matriz da frota do jogador 1 foi um acerto do inimigo
                             estado_jogo["matriz_partida_jogador1"][
                                 posicao_ataque_linha_jogador_humano
                             ][posicao_ataque_coluna_jogador_humano] = 5
 
+                            # Itera sobre os navios do jogador
                             for nav in estado_jogo["posicoes_navios_jogador1"]:
                                 for posicao in estado_jogo["posicoes_navios_jogador1"][
                                     nav
                                 ]["Posicoes"]:
+                                    # Se a posição da iteração atual coincidir com a posição de ataque do adversário
                                     if (
                                         posicao[0]
                                         == posicao_ataque_linha_jogador_humano
                                         and posicao[1]
                                         == posicao_ataque_coluna_jogador_humano
                                     ):
+                                        # Remova a posição do navio atacado
                                         estado_jogo["posicoes_navios_jogador1"][nav][
                                             "Posicoes"
                                         ].remove(
@@ -1596,6 +1636,7 @@ def partida_principal(estado_jogo):
                                             ]
                                         )
 
+                            # Decide se o quadrado acima do alvo anterior deverá ser atacada nos próximos turnos
                             if posicao_ataque_linha_jogador_humano > 0:
                                 # 60% DE CHANCE DE QUERER TENTAR ATACAR NAVIOS PRÓXIMOS - ACIMA
                                 if random.randrange(1, 11) <= 6:
@@ -1606,6 +1647,7 @@ def partida_principal(estado_jogo):
                                         ]
                                     )
 
+                            # Decide se o quadrado abaixo do alvo anterior deverá ser atacada nos próximos turnos
                             if (
                                 posicao_ataque_linha_jogador_humano
                                 < len(estado_jogo["matriz_partida_jogador1"]) - 2
@@ -1619,6 +1661,7 @@ def partida_principal(estado_jogo):
                                         ]
                                     )
 
+                            # Decide se o quadrado à esquerda do alvo anterior deverá ser atacado nos próximos turnos
                             if posicao_ataque_linha_jogador_humano > 0:
                                 # 60% DE CHANCE DE QUERER TENTAR ATACAR NAVIOS PRÓXIMOS - ESQUERDA
                                 if random.randrange(1, 11) <= 6:
@@ -1629,6 +1672,7 @@ def partida_principal(estado_jogo):
                                         ]
                                     )
 
+                            # Decide se o quadrado à direita do alvo anterior deverá ser atacado nos próximos turnos
                             if (
                                 posicao_ataque_linha_jogador_humano
                                 > len(estado_jogo["matriz_partida_jogador1"][0]) - 2
@@ -1642,12 +1686,14 @@ def partida_principal(estado_jogo):
                                         ]
                                     )
 
+                        # O adversário errou o ataque
                         else:
                             time.sleep(0.65)
                             print(
                                 "✅ Capitão! ⚓🚢 O ataque do inimigo foi em vão! 🌊⚔️\n"
                                 "A frota permanece intacta! Aproveitem esta oportunidade para contra-atacar! 🔥🧭\n"
                             )
+                            # Adiciona o quadrado errado à memória de ignorar da I.A.
                             lista_ignorar_inteligencia_artificial.append(
                                 [
                                     posicao_ataque_linha_jogador_humano,
@@ -1656,12 +1702,15 @@ def partida_principal(estado_jogo):
                             )
 
                         ataque_valido = True
+
+                # Há prioridades de ataque para a I.A.
                 else:
                     if not lista_prioridades_inteligencia_artificial:
                         continue
 
                     posicao_valida = False
                     tentativa = 0
+                    # Seleciona uma posição aleatória da lista de prioridades
                     prioridade_atacar = random.choice(
                         lista_prioridades_inteligencia_artificial
                     )
@@ -1817,23 +1866,28 @@ def partida_principal(estado_jogo):
         if jogador_atual == 1:
             navio_existente = False
 
+            # Checa se o adversário ainda possui navios existentes
             for navio in estado_jogo["posicoes_navios_jogador2"]:
                 if len(estado_jogo["posicoes_navios_jogador2"][navio]["Posicoes"]) > 0:
                     navio_existente = True
 
+            # Se não tiver, jogador ganhou
             if not navio_existente:
                 return 1
 
         elif jogador_atual == 2:
             navio_existente = False
 
+            # Checa se o jogador ainda possui navios existentes
             for navio in estado_jogo["posicoes_navios_jogador1"]:
                 if len(estado_jogo["posicoes_navios_jogador1"][navio]["Posicoes"]) > 0:
                     navio_existente = True
 
+            # Se não tiver, adversário ganhou
             if not navio_existente:
                 return 2
 
+        # TROCA DE TURNO
         if jogador_atual == 1:
             jogador_atual = 2
         elif jogador_atual == 2:
@@ -1875,6 +1929,7 @@ def main():
         time.sleep(0.5)
         desenhar_minimapa(estado_jogo["matriz_alvo_jogador1"])
 
+        # Inicialização das varíáveis de contagem de pontuação
         submarinos_inimigos_afundados = 0
         destroiers_inimigos_afundados = 0
         cruzadores_inimigos_afundados = 0
@@ -1885,6 +1940,7 @@ def main():
         cruzadores_aliados_afundados = 0
         encouracados_aliados_afundados = 0
 
+        # Itera sobre os navios do adversário e contabiliza os afundados
         for navio in estado_jogo["posicoes_navios_jogador2"]:
             if (
                 estado_jogo["posicoes_navios_jogador2"][navio]["Tipo_Navio"]
@@ -1914,6 +1970,7 @@ def main():
             ):
                 encouracados_inimigos_afundados += 1
 
+        # Itera sobre os navios do jogador e contabiliza os afundados
         for navio in estado_jogo["posicoes_navios_jogador1"]:
             if (
                 estado_jogo["posicoes_navios_jogador1"][navio]["Tipo_Navio"]
@@ -1955,7 +2012,7 @@ def main():
         time.sleep(1)
         print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n")
 
-
+        # JOGADOR GANHOU
         if vencedor == 1:
             print("\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
                     "🎆🏴‍☠️ PARABÉNS, Capitão Jogador 1! ⚔️🚢\n"
@@ -1983,6 +2040,7 @@ def main():
                 "🌊⚓═══════════════════════════════════════════════⚓🌊\n"
             )
 
+        # ADVERSÁRIO GANHOU
         elif vencedor == 2:
             print(
                 "\n🌊⚓═══════════════════════════════════════════════⚓🌊\n"
